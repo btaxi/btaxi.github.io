@@ -2,146 +2,294 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moto-Taxi Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#121212">
+    
+    <!-- SEO & Google Search Optimization -->
+    <title>Btaxi - Moto-Taxi en direct en Haïti</title>
+    <meta name="description" content="Trouvez un moto-taxi vérifié en temps réel avec Btaxi. Contactez directement un chauffeur par appel, WhatsApp ou SMS en toute sécurité.">
+    <meta name="keywords" content="moto taxi, transport, btaxi, haiti, course moto, chauffeur verifie, deplacement rapide">
+    <link rel="canonical" href="https://btaxi.github.io/">
+
+
+    <meta property="og:title" content="BTAXI — Votre moto-taxi en direct">
+    <meta property="og:description"
+          content="Localisez les chauffeurs, vérifiez leur disponibilité et contactez-les directement en Haïti avec BTAXI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://btaxi.github.io/">
+    <meta property="og:image"
+          content="https://btaxi.github.io/images/btaxi-preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"
+          content="BTAXI : chauffeurs moto, GPS et contact direct en Haïti">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BTAXI — Votre moto-taxi en direct">
+    <meta name="twitter:description"
+          content="Trouvez et contactez directement un chauffeur moto en Haïti.">
+    <meta name="twitter:image"
+          content="https://btaxi.github.io/images/btaxi-preview.jpg">
+
+    <!-- Open Graph / Google Ads / Social Media Optimization -->
+    <meta property="og:title" content="Btaxi - Moto-Taxi en direct">
+    <meta property="og:description" content="Trouvez un moto-taxi vérifié en temps réel et déplacez-vous en toute sécurité.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://btaxi.github.io/">
+    <meta property="og:image" content="https://btaxi.github.io/images/logo.png">
+
+    <!-- Schema.org Structured Data pour Google Search & Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Btaxi",
+      "image": "https://btaxi.github.io/images/logo.png",
+      "@id": "https://btaxi.github.io",
+      "url": "https://btaxi.github.io",
+      "telephone": "+50900000000",
+      "priceRange": "$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Port-au-Prince",
+        "addressCountry": "HT"
+      },
+      "description": "Service de mise en relation de moto-taxis vérifiés en temps réel."
+    }
+    </script>
+
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+
     <style>
         :root {
-            --primary: #ffcc00;
-            --primary-hover: #e6b800;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --border-color: #dee2e6;
-            --dark-nav: #121212;
-            --status-green: #28a745;
-            --status-red: #dc3545;
+            --primary: #FFB800;
+            --primary-hover: #E0A100;
+            --primary-light: #FFF8E1;
+            --bg-color: #F4F6F9;
+            --card-bg: #FFFFFF;
+            --text-main: #1A1D20;
+            --text-muted: #718096;
+            --border-color: #E2E8F0;
+            --dark-nav: #0F1115;
+            --status-green: #10B981;
+            --status-green-bg: #D1FAE5;
+            --status-red: #EF4444;
+            --status-red-bg: #FEE2E2;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
         }
 
-        /* --- STYLE GLOBAL --- */
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
+            font-size: 15px;
             margin: 0;
             padding: 0;
-            padding-bottom: 85px;
+            padding-bottom: calc(190px + env(safe-area-inset-bottom));
             -webkit-tap-highlight-color: transparent;
+        }
+
+        .pwa-install-wrap {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: calc(82px + env(safe-area-inset-bottom));
+            z-index: 1200;
+            width: 50%;
+            max-width: 600px;
+            padding: 0 16px;
+            pointer-events: none;
+        }
+
+        .pwa-install-btn {
+            background: #ffcc00;
+            color: #121212;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            pointer-events: auto;
+            box-shadow: 0 9px 25px rgba(22,31,43,.24);
+        }
+
+        .pwa-install-btn:active {
+            transform: scale(0.97);
+        }
+
+        @media (display-mode: standalone) {
+            .pwa-install-wrap {
+                display: none !important;
+            }
         }
 
         header {
             background-color: var(--dark-nav);
-            color: var(--primary);
-            padding: 14px 16px;
-            text-align: center;
-            font-size: 17px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-
-        .container {
-            padding: 14px;
-            max-width: 600px;
+            width: 50%;
             margin: 0 auto;
         }
 
-        /* --- BARRE D'ONGLETS --- */
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #fff;
+            padding: 2px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--primary);
+        }
+
+        .container {
+            padding: 16px;
+            width: 50%;
+            max-width: none; 
+            margin: 0 auto;
+            background-color: var(--bg-color);
+        }
+
         .tab-bar {
             position: fixed;
             bottom: 0;
-            left: 0;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
             background-color: var(--dark-nav);
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            padding: 8px 4px 12px 4px;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
             z-index: 1000;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            color: #888;
-            padding: 12px 0 10px 0;
-            font-size: 11px;
+            color: #A0AEC0;
+            padding: 8px 0;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
             text-align: center;
-            transition: color 0.2s, background-color 0.2s;
-            border-top: 3px solid transparent;
+            transition: all 0.25s ease;
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+        }
+
+        .tab-btn span.icon {
+            font-size: 18px;
         }
 
         .tab-btn.active {
             color: var(--primary);
-            background-color: #1a1a1a;
-            border-top: 3px solid var(--primary);
+            background-color: rgba(255, 184, 0, 0.1);
         }
 
-        /* --- CONTENU --- */
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .form-container, .profile-container {
             background: var(--card-bg);
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-top: 8px;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-top: 4px;
             border: 1px solid var(--border-color);
         }
 
         h2, h3 { 
             color: var(--text-main); 
             margin-top: 0; 
-            font-size: 18px; 
-            margin-bottom: 14px;
+            font-size: 20px; 
+            font-weight: 700;
+            margin-bottom: 16px;
         }
 
-        .form-group { margin-bottom: 12px; }
+        .form-group { margin-bottom: 14px; }
         
         label { 
             display: block; 
-            margin-bottom: 5px; 
+            margin-bottom: 6px; 
             font-weight: 600; 
-            color: #495057; 
-            font-size: 13px; 
+            color: #4A5568; 
+            font-size: 15px; 
         }
 
         input, select {
             width: 100%; 
-            padding: 11px 12px; 
+            padding: 12px 14px; 
             border: 1px solid var(--border-color);
-            border-radius: 8px; 
+            border-radius: var(--radius-md); 
             box-sizing: border-box; 
-            font-size: 14px;
-            background-color: #fff;
+            font-size: 15px;
+            background-color: #F8FAFC;
             color: var(--text-main);
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
         input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.15);
         }
 
         .btn-submit {
             width: 100%; 
-            padding: 12px; 
+            padding: 14px; 
             background-color: var(--primary);
             border: none; 
-            color: #111; 
-            font-size: 15px; 
+            color: #1A1D20; 
+            font-size: 16px; 
             font-weight: 700;
-            border-radius: 8px; 
+            border-radius: var(--radius-md); 
             cursor: pointer; 
-            margin-top: 6px;
+            margin-top: 8px;
             transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3);
         }
 
         .btn-submit:active { 
@@ -151,125 +299,156 @@
 
         .message { 
             text-align: center; 
-            margin-top: 10px; 
+            margin-top: 12px; 
             font-weight: 600; 
-            font-size: 13px; 
+            font-size: 15px; 
         }
         
         .btn-refresh {
-            background: #212529; 
+            background: var(--dark-nav); 
             color: white; 
-            padding: 11px;
+            padding: 12px;
             border: none; 
-            border-radius: 8px; 
+            border-radius: var(--radius-md); 
             cursor: pointer; 
-            margin-bottom: 14px; 
+            margin-bottom: 16px; 
             width: 100%;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background-color 0.2s;
+            box-shadow: var(--shadow-sm);
+            transition: opacity 0.2s;
         }
-        .btn-refresh:active { background-color: #000; }
+        .btn-refresh:active { opacity: 0.8; }
 
-        /* --- PRÉSENTATION DE L'ACCUEIL --- */
         .hero-banner {
-            background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+            background: linear-gradient(135deg, #1A1D20 0%, #0F1115 100%);
             color: white;
-            padding: 24px 18px;
-            border-radius: 14px;
+            padding: 28px 20px;
+            margin-left: -16px;
+            margin-right: -16px;
+            margin-top: -16px;
+            margin-bottom: 20px;
+            border-radius: 0;
             text-align: center;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 184, 0, 0.1);
+            border-radius: 50%;
+            z-index: 1;
         }
 
         .hero-banner h1 {
             color: var(--primary);
-            font-size: 22px;
+            font-size: 24px;
             margin: 0 0 8px 0;
             font-weight: 800;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-banner p {
-            font-size: 13px;
-            color: #ccc;
-            margin: 0 0 16px 0;
+            font-size: 15px;
+            color: #A0AEC0;
+            margin: 0 0 20px 0;
             line-height: 1.5;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-cta {
             background-color: var(--primary);
-            color: #111;
-            padding: 10px 22px;
-            font-size: 14px;
+            color: #1A1D20;
+            padding: 12px 24px;
+            font-size: 15px;
             font-weight: 700;
             border: none;
-            border-radius: 20px;
+            border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(255, 184, 0, 0.4);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.2s;
         }
+        .hero-cta:active { transform: scale(0.95); }
 
         .features-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 16px;
         }
 
         .feature-item {
             background: var(--card-bg);
-            padding: 14px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            box-shadow: var(--shadow-sm);
         }
 
         .feature-icon {
             font-size: 24px;
-            background: #fff9db;
-            padding: 10px;
-            border-radius: 10px;
+            background: var(--primary-light);
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .feature-text h4 {
-            margin: 0 0 3px 0;
-            font-size: 14px;
+            margin: 0 0 4px 0;
+            font-size: 16px;
             color: var(--text-main);
+            font-weight: 700;
         }
 
         .feature-text p {
             margin: 0;
-            font-size: 12px;
+            font-size: 15px;
             color: var(--text-muted);
+            line-height: 1.4;
         }
 
-        /* --- CARTE DU CHAUFFEUR & BADGE STATUT --- */
-        .grid-chauffeurs { display: flex; flex-direction: column; gap: 12px; }
+        .grid-chauffeurs { display: flex; flex-direction: column; gap: 14px; }
         
         .chauffeur-card {
             background: var(--card-bg); 
-            padding: 14px; 
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
+            padding: 16px; 
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm); 
             border: 1px solid var(--border-color);
             position: relative;
+            transition: transform 0.2s;
         }
 
         .card-disponible { border-left: 5px solid var(--status-green); }
-        .card-indisponible { border-left: 5px solid var(--status-red); opacity: 0.85; }
+        .card-indisponible { border-left: 5px solid var(--status-red); opacity: 0.9; }
 
         .chauffeur-header {
             display: flex; 
             align-items: flex-start; 
-            gap: 12px; 
-            margin-bottom: 10px;
+            gap: 14px; 
+            margin-bottom: 14px;
         }
 
         .avatar-wrapper {
@@ -278,16 +457,15 @@
         }
 
         .avatar-img {
-            width: 58px; 
-            height: 58px; 
+            width: 62px; 
+            height: 62px; 
             border-radius: 50%; 
             object-fit: cover;
             border: 2px solid var(--primary); 
-            background-color: #e9ecef;
+            background-color: #EDF2F7;
             display: block;
         }
 
-        /* Point statut vert / rouge */
         .status-dot {
             width: 14px;
             height: 14px;
@@ -296,7 +474,7 @@
             bottom: 0px;
             right: 0px;
             border: 2px solid #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         .dot-green { background-color: var(--status-green); }
         .dot-red   { background-color: var(--status-red); }
@@ -309,51 +487,50 @@
             margin-bottom: 4px;
         }
 
-        .chauffeur-info h3 { margin: 0; font-size: 15px; font-weight: 700; }
+        .chauffeur-info h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--text-main); }
         
         .status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            font-size: 11px;
+            gap: 4px;
+            font-size: 13px;
             font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
         }
-        .pill-green { background-color: #e8f5e9; color: var(--status-green); }
-        .pill-red   { background-color: #ffebee; color: var(--status-red); }
+        .pill-green { background-color: var(--status-green-bg); color: #047857; }
+        .pill-red   { background-color: var(--status-red-bg); color: #B91C1C; }
 
-        .chauffeur-info p { margin: 2px 0; font-size: 12px; color: var(--text-muted); }
+        .chauffeur-info p { margin: 3px 0; font-size: 15px; color: var(--text-muted); }
         .station-badge {
-            color: #111 !important;
+            color: #1A1D20 !important;
             font-weight: 600;
-            background: #fff3cd;
+            background: #FEF3C7;
             display: inline-block;
-            padding: 2px 6px;
-            border-radius: 5px;
-            margin-top: 3px !important;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-top: 4px !important;
+            font-size: 15px;
         }
 
-        /* --- BOUTONS D'ACTIONS DE CONTACT (ICÔNES SANS TEXTE) --- */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #f1f3f5;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
         }
 
         .btn-action {
             display: inline-flex; 
             align-items: center; 
             justify-content: center;
-            height: 40px;
-            border-radius: 50px; 
+            height: 38px;
+            border-radius: var(--radius-md); 
             text-decoration: none;
             color: white;
             transition: transform 0.15s, opacity 0.15s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
         .btn-action:active {
@@ -362,58 +539,84 @@
         }
 
         .btn-action svg {
-            width: 19px;
-            height: 19px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
         }
 
-        .btn-call { background-color: #28a745; }
+        .btn-call { background-color: #10B981; }
         .btn-wa   { background-color: #25D366; }
-        .btn-sms  { background-color: #007bff; }
-        .btn-bip  { background-color: #fd7e14; }
+        .btn-sms  { background-color: #3B82F6; }
+        .btn-bip  { background-color: #F97316; }
 
-        /* --- PROFIL CHAUFFEUR --- */
         .profile-avatar-container {
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .profile-avatar {
-            width: 90px; 
-            height: 90px; 
+            width: 96px; 
+            height: 96px; 
             border-radius: 50%; 
             object-fit: cover;
             border: 3px solid var(--primary); 
             display: block; 
-            margin: 0 auto 8px auto;
+            margin: 0 auto 10px auto;
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-logout {
-            margin-top: 20px; 
+            margin-top: 24px; 
             width: 100%; 
-            padding: 12px;
-            background: #dc3545; 
+            padding: 14px;
+            background: var(--status-red); 
             color: white; 
             border: none; 
-            border-radius: 8px; 
+            border-radius: var(--radius-md); 
             cursor: pointer;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            transition: opacity 0.2s;
+        }
+        .btn-logout:active { opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            header, .container, .tab-bar, .pwa-install-wrap {
+                width: 100% !important;
+            }
+            .pwa-install-wrap {
+                left: 0 !important;
+                transform: none !important;
+            }
         }
     </style>
 </head>
 <body>
+  <div class="pwa-install-wrap" id="pwaInstallWrap">
+    <button
+        type="button"
+        class="pwa-install-btn"
+        id="pwaInstallBtn">
+        ⬇️ Installer BTAXI
+    </button>
+</div>
 
-    <header>🚕 MOTO-TAXI CONNECT</header>
+    <header>
+        <div class="header-brand">
+            <img src="images/logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+            <h1>Btaxi</h1>
+        </div>
+    </header>
 
     <div class="container">
         
         <!-- ================= ONGLET 1 : ACCUEIL PRÉSENTATION ================= -->
-        <div id="tab-accueil" class="tab-content active">
+        <div id="tab-accueil" class="tab-content">
             <div class="hero-banner">
                 <h1>Voyagez plus vite, sans stress</h1>
                 <p>Trouvez un moto-taxi vérifié en temps réel et contactez-le directement d'un simple clic.</p>
-                <button class="hero-cta" onclick="switchTab('tab-chauffeurs')">🛵 Voir les Chauffeurs</button>
+                <button class="hero-cta" onclick="navigateTo('/chauffeurs')">🛵 Voir les Chauffeurs</button>
             </div>
 
             <h2>Comment ça fonctionne ?</h2>
@@ -451,13 +654,12 @@
                 <span>🔄</span> Rafraîchir la liste
             </button>
             <div id="listeChauffeurs" class="grid-chauffeurs">
-                <p style="text-align: center; color: var(--text-muted); font-size: 13px;">Chargement des données...</p>
+                <p style="text-align: center; color: var(--text-muted); font-size: 15px;">Chargement des données...</p>
             </div>
         </div>
 
         <!-- ================= ONGLET 3 : ESPACE CHAUFFEUR ================= -->
         <div id="tab-login" class="tab-content">
-            <!-- CONNEXION -->
             <div id="view-login" class="form-container">
                 <h2>Connexion Chauffeur</h2>
                 <form id="loginForm">
@@ -474,13 +676,12 @@
                 <p id="loginMessage" class="message"></p>
             </div>
 
-            <!-- PROFIL CONNECTÉ & ÉDITION -->
             <div id="view-profil" class="profile-container" style="display: none;">
                 <h2>Mon Espace Chauffeur</h2>
                 
                 <div class="profile-avatar-container">
                     <img id="profPhotoDisplay" class="profile-avatar" src="https://via.placeholder.com/100?text=Photo" alt="Photo de profil">
-                    <label style="cursor: pointer; color: #007bff; font-size: 13px; font-weight: 600;">
+                    <label style="cursor: pointer; color: #3B82F6; font-size: 15px; font-weight: 600;">
                         📷 Modifier ma photo
                         <input type="file" id="uploadPhotoInput" accept="image/*" style="display: none;" onchange="handlePhotoChange(event)">
                     </label>
@@ -495,7 +696,7 @@
                 </div>
                 <p id="statusMsg" class="message"></p>
 
-                <hr style="margin: 16px 0; border: none; border-top: 1px solid var(--border-color);">
+                <hr style="margin: 18px 0; border: none; border-top: 1px solid var(--border-color);">
 
                 <h3>Mettre à jour mon profil</h3>
                 <form id="updateProfileForm">
@@ -540,65 +741,118 @@
 
     </div>
 
-    <!-- NAVBAR BASSE -->
+    <!-- NAVBAR BASSE avec liens propres -->
     <nav class="tab-bar">
-        <button class="tab-btn active" id="btn-tab-accueil" onclick="switchTab('tab-accueil')">🏠 Accueil</button>
-        <button class="tab-btn" id="btn-tab-chauffeurs" onclick="switchTab('tab-chauffeurs')">🛵 Chauffeurs</button>
-        <button class="tab-btn" id="btn-tab-login" onclick="switchTab('tab-login')">👤 Mon Espace</button>
-        <button class="tab-btn" id="btn-tab-action" onclick="handleAuthAction()">📝 S'inscrire</button>
+        <a href="/accueil" class="tab-btn active" id="btn-accueil" onclick="handleNavClick(event, '/accueil')">
+            <span class="icon">🏠</span>Accueil
+        </a>
+        <a href="/chauffeurs" class="tab-btn" id="btn-chauffeurs" onclick="handleNavClick(event, '/chauffeurs')">
+            <span class="icon">🛵</span>Chauffeurs
+        </a>
+        <a href="/login" class="tab-btn" id="btn-login" onclick="handleNavClick(event, '/login')">
+            <span class="icon">👤</span>Mon Espace
+        </a>
+        <a href="/inscription" class="tab-btn" id="btn-action" onclick="handleAuthActionLink(event)">
+            <span class="icon">📝</span>S'inscrire
+        </a>
     </nav>
 
-    <!-- --- LOGIQUE JS --- -->
+    <script src="service-worker.js"></script>
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVWcukwxIRSRGJfDvqoMm1jPiYCBCjDKZ-QFZKzIPzZ9mo8zu88jZBvYd-F_i1K5ycow/exec";
         let base64PhotoEnAttente = "";
 
-        function handleAuthAction() {
+        // Système de routage propre sans .html
+        const routes = {
+            "/": "tab-accueil",
+            "/accueil": "tab-accueil",
+            "/chauffeurs": "tab-chauffeurs",
+            "/login": "tab-login",
+            "/inscription": "tab-inscription"
+        };
+
+        function navigateTo(path, push = true) {
+            // Nettoyage du chemin si un sous-dossier GitHub Pages est utilisé (ex: /repo-name/accueil -> /accueil)
+            let cleanPath = path;
+            const segments = window.location.pathname.split('/');
+            // Si le site est hébergé à la racine (btaxi.github.io), segments[1] est le nom de la route ou vide
+            if (segments.length > 1 && routes["/" + segments[1]]) {
+                cleanPath = "/" + segments[1];
+            }
+            
+            let targetTab = routes[path] || routes[cleanPath] || "tab-accueil";
+
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) targetContent.classList.add('active');
+
+            // Activer le bouton correspondant dans la navbar
+            for (let route in routes) {
+                if (routes[route] === targetTab) {
+                    // Trouver le bouton associé
+                    let btnId = route === "/accueil" || route === "/" ? "btn-accueil" : "btn-" + route.replace("/", "");
+                    let btn = document.getElementById(btnId);
+                    if (btn) btn.classList.add('active');
+                }
+            }
+
+            if (push) {
+                // Gérer le chemin complet pour GitHub Pages (si sous-dossier, adapter si nécessaire)
+                let baseRepo = window.location.pathname.includes('/btaxi') ? '/btaxi' : '';
+                let finalPath = path === '/' ? baseRepo + '/' : baseRepo + path;
+                history.pushState({ path: path }, "", finalPath);
+            }
+
+            if (targetTab === 'tab-chauffeurs') {
+                chargerChauffeurs();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function handleNavClick(e, path) {
+            e.preventDefault();
+            navigateTo(path);
+        }
+
+        function handleAuthActionLink(e) {
+            e.preventDefault();
             const isConnected = localStorage.getItem('moto_user');
             if (isConnected) {
                 deconnexion();
             } else {
-                switchTab('tab-inscription');
+                navigateTo('/inscription');
             }
         }
 
+        window.addEventListener('popstate', () => {
+            let currentPath = window.location.pathname.replace(/^\/[^/]+/, '/'); // Ajustement route relative
+            if (window.location.pathname === '/' || window.location.pathname === '') currentPath = '/';
+            navigateTo(window.location.pathname, false);
+        });
+
         function updateAuthButtonUI(isConnected) {
-            const btn = document.getElementById('btn-tab-action');
+            const btn = document.getElementById('btn-action');
             if (isConnected) {
-                btn.innerHTML = "🚪 Déconnexion";
-                btn.style.color = "#dc3545";
+                btn.innerHTML = '<span class="icon">🚪</span>Déconnexion';
+                btn.style.color = "#EF4444";
             } else {
-                btn.innerHTML = "📝 S'inscrire";
+                btn.innerHTML = '<span class="icon">📝</span>S\'inscrire';
                 btn.style.color = "";
             }
         }
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            
-            const targetContent = document.getElementById(tabId);
-            if (targetContent) targetContent.classList.add('active');
-
-            const targetBtn = document.getElementById('btn-' + tabId);
-            if (targetBtn) targetBtn.classList.add('active');
-
-            if (tabId === 'tab-chauffeurs') {
-                chargerChauffeurs();
-            }
-        }
-
-        // 1. CHARGEMENT DE LA LISTE AVEC VÉRIFICATION DU STATUT ET STATION
         function chargerChauffeurs() {
             const container = document.getElementById('listeChauffeurs');
-            container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 13px;'>Recherche des chauffeurs en direct...</p>";
+            container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 15px;'>Recherche des chauffeurs en direct...</p>";
 
             fetch(GOOGLE_SCRIPT_URL)
                 .then(res => res.json())
                 .then(data => {
                     container.innerHTML = "";
                     if (!data || data.length === 0) {
-                        container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 13px;'>Aucun chauffeur enregistré pour le moment.</p>";
+                        container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 15px;'>Aucun chauffeur enregistré pour le moment.</p>";
                         return;
                     }
 
@@ -650,12 +904,11 @@
                     });
                 })
                 .catch(err => {
-                    container.innerHTML = "<p style='text-align:center; color:red; font-size: 13px;'>Erreur de connexion au serveur.</p>";
+                    container.innerHTML = "<p style='text-align:center; color:red; font-size: 15px;'>Erreur de connexion au serveur.</p>";
                     console.error(err);
                 });
         }
 
-        // 2. INSCRIPTION
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const msg = document.getElementById('regMessage');
@@ -677,17 +930,14 @@
                 nifCin: document.getElementById('nifCin').value
             };
 
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
                     msg.style.color = "green";
                     msg.innerText = "Compte créé ! Connexion en cours...";
                     document.getElementById('registrationForm').reset();
-                    setTimeout(() => switchTab('tab-login'), 1500);
+                    setTimeout(() => navigateTo('/login'), 1500);
                 } else {
                     msg.style.color = "red";
                     msg.innerText = res.message || "Erreur lors de l'enregistrement.";
@@ -699,7 +949,6 @@
             });
         });
 
-        // 3. CONNEXION
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const msg = document.getElementById('loginMessage');
@@ -712,10 +961,7 @@
                 password: document.getElementById('loginPassword').value
             };
 
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
@@ -734,7 +980,6 @@
             });
         });
 
-        // 4. AFFICHAGE DU PROFIL
         function afficherProfil(driver) {
             document.getElementById('view-login').style.display = 'none';
             document.getElementById('view-profil').style.display = 'block';
@@ -749,19 +994,12 @@
             document.getElementById('profPlaque').value = driver.plaque || '';
             document.getElementById('profNifCin').value = driver.nifCin || '';
             document.getElementById('selectStatut').value = driver.statut || "Indisponible";
-
-            if (driver.photo) {
-                document.getElementById('profPhotoDisplay').src = driver.photo;
-            } else {
-                document.getElementById('profPhotoDisplay').src = "https://via.placeholder.com/100?text=Photo";
-            }
+            document.getElementById('profPhotoDisplay').src = driver.photo || "https://via.placeholder.com/100?text=Photo";
         }
 
-        // 5. PHOTO
         function handlePhotoChange(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(evt) {
                 const img = new Image();
@@ -769,13 +1007,9 @@
                     const canvas = document.createElement('canvas');
                     const MAX_SIZE = 140;
                     let w = img.width, h = img.height;
-                    if (w > h) {
-                        if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; }
-                    } else {
-                        if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; }
-                    }
-                    canvas.width = w;
-                    canvas.height = h;
+                    if (w > h) { if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; } }
+                    else { if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; } }
+                    canvas.width = w; canvas.height = h;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, w, h);
                     base64PhotoEnAttente = canvas.toDataURL('image/jpeg', 0.65);
@@ -786,12 +1020,10 @@
             reader.readAsDataURL(file);
         }
 
-        // 6. METTRE À JOUR LE PROFIL
         document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const driver = JSON.parse(localStorage.getItem('moto_user'));
             if (!driver) return;
-
             const msg = document.getElementById('profileUpdateMsg');
             msg.style.color = '#333';
             msg.innerText = "Enregistrement en cours...";
@@ -811,24 +1043,18 @@
                 photo: base64PhotoEnAttente || driver.photo || ""
             };
 
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
                     msg.style.color = "green";
                     msg.innerText = "Profil mis à jour avec succès !";
-                    driver.nom = payload.nom;
-                    driver.phone = payload.phone;
-                    driver.email = payload.email;
-                    driver.adresse = payload.adresse;
-                    driver.station = payload.station;
-                    driver.marque = payload.marqueMoto;
-                    driver.couleur = payload.couleurMoto;
-                    driver.plaque = payload.plaque;
-                    driver.nifCin = payload.nifCin;
+                    Object.assign(driver, {
+                        nom: payload.nom, phone: payload.phone, email: payload.email,
+                        adresse: payload.adresse, station: payload.station,
+                        marque: payload.marqueMoto, couleur: payload.couleurMoto,
+                        plaque: payload.plaque, nifCin: payload.nifCin
+                    });
                     if (base64PhotoEnAttente) driver.photo = base64PhotoEnAttente;
                     localStorage.setItem('moto_user', JSON.stringify(driver));
                 } else {
@@ -836,51 +1062,33 @@
                     msg.innerText = res.message || "Erreur lors de la mise à jour.";
                 }
             })
-            .catch(() => {
-                msg.style.color = "red";
-                msg.innerText = "Erreur de connexion.";
-            });
+            .catch(() => { msg.style.color = "red"; msg.innerText = "Erreur de connexion."; });
         });
 
-        // 7. STATUT EN TEMPS RÉEL
         function changerStatut() {
             const driver = JSON.parse(localStorage.getItem('moto_user'));
             if (!driver) return;
-
             const newStatut = document.getElementById('selectStatut').value;
             const msg = document.getElementById('statusMsg');
-            msg.style.color = '#555';
-            msg.innerText = "Mise à jour...";
-
-            const payload = {
-                action: "updateStatus",
-                username: driver.username,
-                statut: newStatut
-            };
+            msg.style.color = '#555'; msg.innerText = "Mise à jour...";
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ action: "updateStatus", username: driver.username, statut: newStatut })
             })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
                     driver.statut = newStatut;
                     localStorage.setItem('moto_user', JSON.stringify(driver));
-                    msg.style.color = "green";
-                    msg.innerText = "Statut mis à jour : " + newStatut;
+                    msg.style.color = "green"; msg.innerText = "Statut mis à jour : " + newStatut;
                 } else {
-                    msg.style.color = "red";
-                    msg.innerText = "Échec du changement.";
+                    msg.style.color = "red"; msg.innerText = "Échec du changement.";
                 }
             })
-            .catch(() => {
-                msg.style.color = "red";
-                msg.innerText = "Erreur réseau.";
-            });
+            .catch(() => { msg.style.color = "red"; msg.innerText = "Erreur réseau."; });
         }
 
-        // 8. DÉCONNEXION
         function deconnexion() {
             localStorage.removeItem('moto_user');
             base64PhotoEnAttente = "";
@@ -889,19 +1097,25 @@
             document.getElementById('loginForm').reset();
             document.getElementById('loginMessage').innerText = "";
             updateAuthButtonUI(false);
-            switchTab('tab-accueil');
+            navigateTo('/accueil');
         }
 
-        // 9. DÉMARRAGE
         window.addEventListener('load', () => {
             const savedDriver = localStorage.getItem('moto_user');
-            if (savedDriver) {
-                afficherProfil(JSON.parse(savedDriver));
-                updateAuthButtonUI(true);
-            } else {
-                updateAuthButtonUI(false);
+            updateAuthButtonUI(!!savedDriver);
+            if (savedDriver) afficherProfil(JSON.parse(savedDriver));
+
+            // Détection de l'URL initiale au chargement de la page
+            const pathname = window.location.pathname;
+            let currentRoute = "/";
+            for (let route in routes) {
+                if (route !== "/" && pathname.includes(route)) {
+                    currentRoute = route;
+                    break;
+                }
             }
+            navigateTo(currentRoute, false);
         });
-   </script>
+    </script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "BTAXI — Bentoul Taxi",
+  "short_name": "BTAXI",
+  "description": "Trouvez et contactez un moto-taxi près de vous.",
+  "lang": "fr-HT",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121212",
+  "theme_color": "#ffcc00",
+  "icons": [
+    { "src": "images/logo-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "images/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
