@@ -11,26 +11,6 @@
     <meta name="keywords" content="moto taxi, transport, btaxi, haiti, course moto, chauffeur verifie, deplacement rapide">
     <link rel="canonical" href="https://btaxi.github.io/">
 
-
-    <meta property="og:title" content="BTAXI — Votre moto-taxi en direct">
-    <meta property="og:description"
-          content="Localisez les chauffeurs, vérifiez leur disponibilité et contactez-les directement en Haïti avec BTAXI.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://btaxi.github.io/">
-    <meta property="og:image"
-          content="https://btaxi.github.io/images/btaxi-preview.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt"
-          content="BTAXI : chauffeurs moto, GPS et contact direct en Haïti">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BTAXI — Votre moto-taxi en direct">
-    <meta name="twitter:description"
-          content="Trouvez et contactez directement un chauffeur moto en Haïti.">
-    <meta name="twitter:image"
-          content="https://btaxi.github.io/images/btaxi-preview.jpg">
-
     <!-- Open Graph / Google Ads / Social Media Optimization -->
     <meta property="og:title" content="Btaxi - Moto-Taxi en direct">
     <meta property="og:description" content="Trouvez un moto-taxi vérifié en temps réel et déplacez-vous en toute sécurité.">
@@ -99,34 +79,37 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* CORRECTION DU BOUTON PWA : Taille compacte et centré proprement */
         .pwa-install-wrap {
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: calc(82px + env(safe-area-inset-bottom));
+            bottom: calc(75px + env(safe-area-inset-bottom));
             z-index: 1200;
-            width: 50%;
-            max-width: 600px;
-            padding: 0 16px;
-            pointer-events: none;
+            width: auto;
+            max-width: 90%;
+            padding: 0;
+            display: none; /* Masqué par défaut jusqu'à ce que l'événement PWA se déclenche */
         }
 
         .pwa-install-btn {
-            background: #ffcc00;
+            background: var(--primary);
             color: #121212;
             border: none;
-            border-radius: 10px;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
-            width: 100%;
-            pointer-events: auto;
-            box-shadow: 0 9px 25px rgba(22,31,43,.24);
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
         }
 
         .pwa-install-btn:active {
-            transform: scale(0.97);
+            transform: scale(0.95);
         }
 
         @media (display-mode: standalone) {
@@ -157,12 +140,12 @@
         }
 
         .header-logo {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
-            border-radius: 6px;
-            background: #fff;
-            padding: 2px;
+            border-radius: 8px;
+            background: #1a1d20;
+            box-shadow: 0 2px 6px rgba(255, 184, 0, 0.2);
         }
 
         header h1 {
@@ -585,26 +568,26 @@
             header, .container, .tab-bar, .pwa-install-wrap {
                 width: 100% !important;
             }
-            .pwa-install-wrap {
-                left: 0 !important;
-                transform: none !important;
-            }
         }
     </style>
 </head>
 <body>
+  <!-- Bouton d'installation PWA compact et fonctionnel -->
   <div class="pwa-install-wrap" id="pwaInstallWrap">
-    <button
-        type="button"
-        class="pwa-install-btn"
-        id="pwaInstallBtn">
-        ⬇️ Installer BTAXI
+    <button type="button" class="pwa-install-btn" id="pwaInstallBtn">
+        <span>⬇️ Installer BTAXI</span>
     </button>
 </div>
 
     <header>
         <div class="header-brand">
-            <img src="images/logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+            <svg class="header-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="8" fill="#121212"/>
+                <path d="M6 20h3l1.5-4.5h9l1.5 4.5h3" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="9.5" cy="21.5" r="3" fill="#FFB800"/>
+                <circle cx="22.5" cy="21.5" r="3" fill="#FFB800"/>
+                <path d="M16 6v8m-4-4l4-4 4 4" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             <h1>Btaxi</h1>
         </div>
     </header>
@@ -762,7 +745,6 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVWcukwxIRSRGJfDvqoMm1jPiYCBCjDKZ-QFZKzIPzZ9mo8zu88jZBvYd-F_i1K5ycow/exec";
         let base64PhotoEnAttente = "";
 
-        // Système de routage propre sans .html
         const routes = {
             "/": "tab-accueil",
             "/accueil": "tab-accueil",
@@ -772,10 +754,8 @@
         };
 
         function navigateTo(path, push = true) {
-            // Nettoyage du chemin si un sous-dossier GitHub Pages est utilisé (ex: /repo-name/accueil -> /accueil)
             let cleanPath = path;
             const segments = window.location.pathname.split('/');
-            // Si le site est hébergé à la racine (btaxi.github.io), segments[1] est le nom de la route ou vide
             if (segments.length > 1 && routes["/" + segments[1]]) {
                 cleanPath = "/" + segments[1];
             }
@@ -788,10 +768,8 @@
             const targetContent = document.getElementById(targetTab);
             if (targetContent) targetContent.classList.add('active');
 
-            // Activer le bouton correspondant dans la navbar
             for (let route in routes) {
                 if (routes[route] === targetTab) {
-                    // Trouver le bouton associé
                     let btnId = route === "/accueil" || route === "/" ? "btn-accueil" : "btn-" + route.replace("/", "");
                     let btn = document.getElementById(btnId);
                     if (btn) btn.classList.add('active');
@@ -799,7 +777,6 @@
             }
 
             if (push) {
-                // Gérer le chemin complet pour GitHub Pages (si sous-dossier, adapter si nécessaire)
                 let baseRepo = window.location.pathname.includes('/btaxi') ? '/btaxi' : '';
                 let finalPath = path === '/' ? baseRepo + '/' : baseRepo + path;
                 history.pushState({ path: path }, "", finalPath);
@@ -827,7 +804,7 @@
         }
 
         window.addEventListener('popstate', () => {
-            let currentPath = window.location.pathname.replace(/^\/[^/]+/, '/'); // Ajustement route relative
+            let currentPath = window.location.pathname.replace(/^\/[^/]+/, '/');
             if (window.location.pathname === '/' || window.location.pathname === '') currentPath = '/';
             navigateTo(window.location.pathname, false);
         });
@@ -1105,7 +1082,6 @@
             updateAuthButtonUI(!!savedDriver);
             if (savedDriver) afficherProfil(JSON.parse(savedDriver));
 
-            // Détection de l'URL initiale au chargement de la page
             const pathname = window.location.pathname;
             let currentRoute = "/";
             for (let route in routes) {
@@ -1116,6 +1092,47 @@
             }
             navigateTo(currentRoute, false);
         });
+    </script>
+
+    <!-- Script PWA optimisé pour corriger le comportement du bouton d'installation -->
+    <script>
+        (() => {
+            const wrap = document.getElementById("pwaInstallWrap");
+            const btn = document.getElementById("pwaInstallBtn");
+            let deferredPrompt = null;
+
+            function isStandalone() {
+                return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+            }
+
+            window.addEventListener("beforeinstallprompt", (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                if (!isStandalone() && wrap) {
+                    wrap.style.display = "block";
+                }
+            });
+
+            if (btn) {
+                btn.addEventListener("click", async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const choiceResult = await deferredPrompt.userChoice;
+                        if (choiceResult.outcome === "accepted") {
+                            wrap.style.display = "none";
+                        }
+                        deferredPrompt = null;
+                    } else {
+                        alert("Pour installer BTAXI, ouvrez le menu ⋮ de votre navigateur et sélectionnez « Ajouter à l'écran d'accueil » ou « Installer l'application ».");
+                    }
+                });
+            }
+
+            window.addEventListener("appinstalled", () => {
+                if (wrap) wrap.style.display = "none";
+                deferredPrompt = null;
+            });
+        })();
     </script>
 </body>
 </html>
