@@ -2,23 +2,17 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#121212">
-    
-    <!-- SEO & Google Search Optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3B71CA">
     <title>Btaxi - Moto-Taxi en direct en Haïti</title>
     <meta name="description" content="Trouvez un moto-taxi vérifié en temps réel avec Btaxi. Contactez directement un chauffeur par appel, WhatsApp ou SMS en toute sécurité.">
     <meta name="keywords" content="moto taxi, transport, btaxi, haiti, course moto, chauffeur verifie, deplacement rapide">
     <link rel="canonical" href="https://btaxi.github.io/">
-
-    <!-- Open Graph / Google Ads / Social Media Optimization -->
     <meta property="og:title" content="Btaxi - Moto-Taxi en direct">
     <meta property="og:description" content="Trouvez un moto-taxi vérifié en temps réel et déplacez-vous en toute sécurité.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://btaxi.github.io/">
     <meta property="og:image" content="https://btaxi.github.io/images/logo.png">
-
-    <!-- Schema.org Structured Data pour Google Search & Local Business -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -29,1109 +23,992 @@
       "url": "https://btaxi.github.io",
       "telephone": "+50900000000",
       "priceRange": "$",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Port-au-Prince",
-        "addressCountry": "HT"
-      },
+      "address": { "@type": "PostalAddress", "addressLocality": "Port-au-Prince", "addressCountry": "HT" },
       "description": "Service de mise en relation de moto-taxis vérifiés en temps réel."
     }
     </script>
-
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" href="images/logo.png">
     <link rel="apple-touch-icon" href="images/logo.png">
-
     <style>
         :root {
-            --primary: #FFB800;
-            --primary-hover: #E0A100;
-            --primary-light: #FFF8E1;
-            --bg-color: #F4F6F9;
+            --primary: #3B71CA;
+            --primary-hover: #2B59A2;
+            --primary-light: #EFF6FF;
+            --bg-color: #FFFFFF;
             --card-bg: #FFFFFF;
-            --text-main: #1A1D20;
-            --text-muted: #718096;
+            --text-main: #000000;
+            --text-muted: #64748B;
             --border-color: #E2E8F0;
-            --dark-nav: #0F1115;
+            --dark-nav: #FFFFFF;
             --status-green: #10B981;
             --status-green-bg: #D1FAE5;
             --status-red: #EF4444;
             --status-red-bg: #FEE2E2;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-            --radius-lg: 16px;
+            --shadow-sm: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 25px rgba(0,0,0,0.12);
+            --radius-lg: 20px;
             --radius-md: 12px;
             --radius-sm: 8px;
         }
-
-        * {
-            box-sizing: border-box;
-        }
-        
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-size: 15px;
-            margin: 0;
-            padding: 0;
-            padding-bottom: calc(190px + env(safe-area-inset-bottom));
-            -webkit-tap-highlight-color: transparent;
+            background: var(--bg-color); color: var(--text-main); font-size: 15px; margin: 0;
+            padding: 0 0 calc(100px + env(safe-area-inset-bottom)); -webkit-tap-highlight-color: transparent;
         }
-
-        /* CORRECTION DU BOUTON PWA : Taille compacte et centré proprement */
         .pwa-install-wrap {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: calc(75px + env(safe-area-inset-bottom));
-            z-index: 1200;
-            width: auto;
-            max-width: 90%;
-            padding: 0;
-            display: none; /* Masqué par défaut jusqu'à ce que l'événement PWA se déclenche */
+            position: fixed; left: 50%; transform: translateX(-50%);
+            bottom: calc(88px + env(safe-area-inset-bottom)); z-index: 1200;
+            width: auto; max-width: 90%; padding: 0; display: none;
         }
-
         .pwa-install-btn {
-            background: var(--primary);
-            color: #121212;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
+            background: var(--primary); color: #FFFFFF; border: none; border-radius: 30px;
+            padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59,113,202,0.4); display: flex; align-items: center; gap: 8px; white-space: nowrap;
         }
-
-        .pwa-install-btn:active {
+        .pwa-install-btn:active { transform: scale(.95); }
+        @media (display-mode: standalone) { .pwa-install-wrap { display: none !important; } }
+        
+        header {
+            background: #FFFFFF; color: #000000; padding: 12px 16px; display: flex;
+            align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100; width: 100%; max-width: 760px; margin: 0 auto;
+        }
+        header::before {
+            content: "☰"; font-size: 26px; font-weight: 300; color: #000; cursor: pointer; margin-right: 8px;
+        }
+        header::after {
+            content: ""; width: 36px; height: 36px; background: #E2E8F0; border-radius: 50%; display: block; border: 1px solid #CBD5E1;
+        }
+        .header-brand { display: flex; align-items: center; gap: 8px; flex: 1; margin-left: 8px; }
+        .header-logo { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; background: transparent; }
+        header h1 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; color: #000000; text-transform: uppercase; }
+        
+        .container { padding: 0; width: 100%; max-width: 760px; margin: 0 auto; background: var(--bg-color); }
+        
+        /* Barre de navigation inférieure avec les icônes correspondantes */
+        .tab-bar {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 760px;
+            background: #FFFFFF; display: flex; justify-content: space-around;
+            padding: 8px 4px calc(12px + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--border-color); z-index: 1000;
+        }
+        .tab-btn {
+            background: none; border: none; color: #000000; padding: 6px 0; font-size: 11px;
+            font-weight: 600; cursor: pointer; width: 100%; text-align: center; transition: all .25s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none;
+        }
+        .tab-btn span.icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .tab-btn.active { color: var(--primary); }
+        
+        .tab-content { display: none; padding: 16px; }
+        .tab-content.active { display: block; animation: fadeIn .3s ease; }
+        #tab-accueil.tab-content { padding: 0; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .form-container, .profile-container { background: var(--card-bg); padding: 20px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin: 16px; border: 1px solid var(--border-color); }
+        h2, h3 { color: var(--text-main); margin-top: 0; font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #4A5568; font-size: 15px; }
+        input, select { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 15px; background: #F8FAFC; color: var(--text-main); transition: all .2s; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(59,113,202,.15); }
+        .btn-submit { width: 100%; padding: 14px; background: var(--primary); border: none; color: #FFFFFF; font-size: 16px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; margin-top: 8px; transition: background-color .2s, transform .1s; box-shadow: 0 4px 12px rgba(59,113,202,.3); }
+        .btn-submit:disabled { opacity: .65; cursor: wait; }
+        .btn-submit:active { background: var(--primary-hover); transform: scale(.98); }
+        .message { text-align: center; margin-top: 12px; font-weight: 600; font-size: 15px; }
+        .btn-refresh { background: var(--primary); color: #fff; padding: 12px; border: none; border-radius: var(--radius-md); cursor: pointer; margin-bottom: 16px; width: 100%; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: var(--shadow-sm); transition: opacity .2s; }
+        .btn-refresh:active { opacity: .8; }
+        
+        /* Hero Banner avec les inputs et le bouton demande intégrés */
+        .hero-banner {
+            background: #3B71CA; color: #fff; padding: 28px 16px 24px; margin: 0; text-align: center; box-shadow: none; position: relative;
+        }
+        .hero-banner h1 { color: #FFFFFF; font-size: 26px; margin: 0 0 8px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .hero-banner p { font-size: 15px; color: #FFFFFF; margin: 0 0 18px; line-height: 1.4; opacity: 0.95; font-weight: 400; }
+        
+        .request-form {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .request-input {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            background: #FFFFFF;
+            color: #333;
+            outline: none;
+            text-align: center;
+        }
+        .request-btn {
+            background: #FFFFFF;
+            color: #000000;
+            font-weight: 700;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: transform 0.1s;
+        }
+        .request-btn:active {
             transform: scale(0.95);
         }
 
-        @media (display-mode: standalone) {
-            .pwa-install-wrap {
-                display: none !important;
-            }
-        }
-
-        header {
-            background-color: var(--dark-nav);
-            color: #FFFFFF;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-logo {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #1a1d20;
-            box-shadow: 0 2px 6px rgba(255, 184, 0, 0.2);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: var(--primary);
-        }
-
-        .container {
-            padding: 16px;
-            width: 50%;
-            max-width: none; 
-            margin: 0 auto;
-            background-color: var(--bg-color);
-        }
-
-        .tab-bar {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50%;
-            background-color: var(--dark-nav);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 4px 12px 4px;
-            box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
-            z-index: 1000;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            color: #A0AEC0;
-            padding: 8px 0;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: all 0.25s ease;
-            border-radius: var(--radius-sm);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            text-decoration: none;
-        }
-
-        .tab-btn span.icon {
-            font-size: 18px;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            background-color: rgba(255, 184, 0, 0.1);
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-container, .profile-container {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            margin-top: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        h2, h3 { 
-            color: var(--text-main); 
-            margin-top: 0; 
-            font-size: 20px; 
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .form-group { margin-bottom: 14px; }
+        .hero-cta { display: none; }
         
-        label { 
-            display: block; 
-            margin-bottom: 6px; 
-            font-weight: 600; 
-            color: #4A5568; 
-            font-size: 15px; 
-        }
-
-        input, select {
-            width: 100%; 
-            padding: 12px 14px; 
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md); 
-            box-sizing: border-box; 
-            font-size: 15px;
-            background-color: #F8FAFC;
-            color: var(--text-main);
-            transition: all 0.2s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(255, 184, 0, 0.15);
-        }
-
-        .btn-submit {
-            width: 100%; 
-            padding: 14px; 
-            background-color: var(--primary);
-            border: none; 
-            color: #1A1D20; 
-            font-size: 16px; 
-            font-weight: 700;
-            border-radius: var(--radius-md); 
-            cursor: pointer; 
-            margin-top: 8px;
-            transition: background-color 0.2s, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3);
-        }
-
-        .btn-submit:active { 
-            background-color: var(--primary-hover); 
-            transform: scale(0.98);
-        }
-
-        .message { 
-            text-align: center; 
-            margin-top: 12px; 
-            font-weight: 600; 
-            font-size: 15px; 
-        }
-        
-        .btn-refresh {
-            background: var(--dark-nav); 
-            color: white; 
-            padding: 12px;
-            border: none; 
-            border-radius: var(--radius-md); 
-            cursor: pointer; 
-            margin-bottom: 16px; 
-            width: 100%;
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: var(--shadow-sm);
-            transition: opacity 0.2s;
-        }
-        .btn-refresh:active { opacity: 0.8; }
-
-        .hero-banner {
-            background: linear-gradient(135deg, #1A1D20 0%, #0F1115 100%);
-            color: white;
-            padding: 28px 20px;
-            margin-left: -16px;
-            margin-right: -16px;
-            margin-top: -16px;
-            margin-bottom: 20px;
-            border-radius: 0;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 184, 0, 0.1);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .hero-banner h1 {
-            color: var(--primary);
-            font-size: 24px;
-            margin: 0 0 8px 0;
-            font-weight: 800;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-banner p {
-            font-size: 15px;
-            color: #A0AEC0;
-            margin: 0 0 20px 0;
-            line-height: 1.5;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-cta {
-            background-color: var(--primary);
-            color: #1A1D20;
-            padding: 12px 24px;
-            font-size: 15px;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(255, 184, 0, 0.4);
-            position: relative;
-            z-index: 2;
-            transition: transform 0.2s;
-        }
-        .hero-cta:active { transform: scale(0.95); }
-
         .features-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 20px 16px; margin-bottom: 16px;
         }
-
         .feature-item {
-            background: var(--card-bg);
-            padding: 16px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            box-shadow: var(--shadow-sm);
+            background: #FFFFFF; padding: 20px 14px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: var(--shadow-sm); min-height: 140px; justify-content: center;
         }
-
-        .feature-icon {
-            font-size: 24px;
-            background: var(--primary-light);
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .feature-text h4 {
-            margin: 0 0 4px 0;
-            font-size: 16px;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .feature-text p {
-            margin: 0;
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .grid-chauffeurs { display: flex; flex-direction: column; gap: 14px; }
+        .feature-icon { font-size: 24px; background: transparent; width: auto; height: auto; margin-bottom: 8px; }
+        .feature-text h4 { margin: 0 0 4px; font-size: 15px; color: var(--text-main); font-weight: 700; }
+        .feature-text p { margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.3; }
         
-        .chauffeur-card {
-            background: var(--card-bg); 
-            padding: 16px; 
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm); 
-            border: 1px solid var(--border-color);
-            position: relative;
-            transition: transform 0.2s;
-        }
-
+        .grid-chauffeurs { display: grid; grid-template-columns: 1fr; gap: 14px; }
+        .chauffeur-card { background: var(--card-bg); padding: 16px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); position: relative; transition: transform .2s; }
         .card-disponible { border-left: 5px solid var(--status-green); }
-        .card-indisponible { border-left: 5px solid var(--status-red); opacity: 0.9; }
+        .card-indisponible { border-left: 5px solid var(--status-red); opacity: .9; }
+        .chauffeur-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+        .avatar-wrapper { position: relative; flex-shrink: 0; }
+        .avatar-img { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); background: #EDF2F7; display: block; }
+        .status-dot { width: 14px; height: 14px; border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+        .dot-green { background: var(--status-green); } .dot-red { background: var(--status-red); }
+        .chauffeur-info { flex: 1; min-width: 0; }
+        .chauffeur-info-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .chauffeur-info h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--text-main); overflow-wrap: anywhere; }
+        .status-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+        .pill-green { background: var(--status-green-bg); color: #047857; } .pill-red { background: var(--status-red-bg); color: #B91C1C; }
+        .chauffeur-info p { margin: 3px 0; font-size: 15px; color: var(--text-muted); overflow-wrap: anywhere; }
+        .station-badge { color: #1A1D20 !important; font-weight: 600; background: #FEF3C7; display: inline-block; padding: 3px 8px; border-radius: 6px; margin-top: 4px !important; font-size: 15px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .btn-action { display: inline-flex; align-items: center; justify-content: center; height: 42px; border-radius: var(--radius-md); text-decoration: none; color: #fff; transition: transform .15s, opacity .15s; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+        .btn-action:active { transform: scale(.92); opacity: .85; }
+        .btn-action svg { width: 20px; height: 20px; fill: currentColor; }
+        .btn-call { background: #10B981; } .btn-wa { background: #25D366; } .btn-sms { background: #3B82F6; } .btn-bip { background: #F97316; }
+        .btn-action[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+        .profile-avatar-container { text-align: center; margin-bottom: 16px; }
+        .profile-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); display: block; margin: 0 auto 10px; box-shadow: var(--shadow-sm); }
+        .btn-logout { margin-top: 24px; width: 100%; padding: 14px; background: var(--status-red); color: #fff; border: none; border-radius: var(--radius-md); cursor: pointer; font-weight: 700; font-size: 15px; box-shadow: 0 4px 12px rgba(239,68,68,.3); transition: opacity .2s; }
+        .btn-logout:active { opacity: .8; }
+        .tab-btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #2563EB; outline-offset: 2px; }
 
-        .chauffeur-header {
-            display: flex; 
-            align-items: flex-start; 
-            gap: 14px; 
-            margin-bottom: 14px;
+        /* Demandes de course et chat intégré */
+        .request-chat-panel, .chat-panel {
+            margin-top: 16px; padding: 14px; border-radius: 14px; background: #fff;
+            color: #0f172a; border: 1px solid #dbe3ef; box-shadow: 0 4px 14px rgba(15,23,42,.10);
+            text-align: left;
+        }
+        .request-chat-panel[hidden], .chat-panel[hidden] { display: none !important; }
+        .request-panel-heading, .chat-panel-header {
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+        }
+        .request-panel-heading strong { display: block; color: #0f172a; font-size: 15px; }
+        .request-panel-heading p, .chat-panel-header p { color: #64748b; font-size: 13px; margin: 5px 0 0; line-height: 1.45; }
+        .btn-small-neutral { border: 1px solid #cbd5e1; color: #334155; background: #f8fafc; border-radius: 9px; padding: 8px 10px; cursor: pointer; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+        .hero-banner .alert-description, .hero-banner .chat-empty { color: #64748b; }
+        .chat-log { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; padding: 12px 2px; margin: 10px 0; }
+        .chat-empty { color: #64748b; text-align: center; font-size: 13px; padding: 12px 4px; }
+        .chat-message { max-width: 88%; padding: 9px 11px; border-radius: 12px; background: #f1f5f9; color: #0f172a; align-self: flex-start; overflow-wrap: anywhere; }
+        .chat-message.mine { background: #dbeafe; align-self: flex-end; }
+        .chat-message strong { display: block; font-size: 11px; color: #475569; margin-bottom: 3px; }
+        .chat-message p { margin: 0; white-space: pre-wrap; font-size: 14px; line-height: 1.4; }
+        .chat-message time { display: block; margin-top: 4px; font-size: 10px; color: #64748b; text-align: right; }
+        .chat-form { display: flex; align-items: stretch; gap: 8px; }
+        .chat-form input { flex: 1; min-width: 0; background: #fff; }
+        .chat-form button { border: 0; border-radius: 10px; padding: 0 15px; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; }
+        .chat-form button:disabled, .chat-form input:disabled { opacity: .55; cursor: not-allowed; }
+        .driver-request-card { background: #fff; border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; box-shadow: var(--shadow-sm); }
+        .driver-request-card h3 { margin: 0 0 8px; font-size: 16px; }
+        .driver-request-card p { margin: 7px 0; color: #475569; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+        .request-state { display: inline-flex; margin: 0 0 9px; padding: 4px 8px; border-radius: 30px; background: #fef3c7; color: #92400e; font-size: 12px; font-weight: 800; }
+        .request-state.accepted { background: #d1fae5; color: #047857; }
+        .btn-accept-request, .btn-open-chat { width: 100%; border: 0; border-radius: 10px; min-height: 43px; color: #fff; background: #059669; font-weight: 800; font-size: 14px; margin-top: 8px; cursor: pointer; }
+        .btn-accept-request:disabled { opacity: .6; cursor: wait; }
+        .btn-open-chat { background: var(--primary); }
+        .demand-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0 16px; }
+        .demand-toolbar .btn-refresh { margin: 0; height: 100%; }
+        .alert-enable-btn { background: #0f172a; color: #fff; border: none; border-radius: 12px; padding: 12px; cursor: pointer; font-weight: 700; font-size: 13px; }
+        .alert-description { color: var(--text-muted); font-size: 13px; line-height: 1.5; margin: 8px 0; }
+        @media (max-width: 420px) {
+            .demand-toolbar { grid-template-columns: 1fr; }
+            .request-panel-heading, .chat-panel-header { flex-direction: column; }
+            .chat-form { flex-direction: column; }
+            .chat-form button { min-height: 42px; }
+            .tab-btn { min-width: 0; font-size: 10px; }
         }
 
-        .avatar-wrapper {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .avatar-img {
-            width: 62px; 
-            height: 62px; 
-            border-radius: 50%; 
-            object-fit: cover;
-            border: 2px solid var(--primary); 
-            background-color: #EDF2F7;
-            display: block;
-        }
-
-        .status-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            border: 2px solid #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        .dot-green { background-color: var(--status-green); }
-        .dot-red   { background-color: var(--status-red); }
-
-        .chauffeur-info { flex: 1; }
-        .chauffeur-info-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .chauffeur-info h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--text-main); }
-        
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-        .pill-green { background-color: var(--status-green-bg); color: #047857; }
-        .pill-red   { background-color: var(--status-red-bg); color: #B91C1C; }
-
-        .chauffeur-info p { margin: 3px 0; font-size: 15px; color: var(--text-muted); }
-        .station-badge {
-            color: #1A1D20 !important;
-            font-weight: 600;
-            background: #FEF3C7;
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 6px;
-            margin-top: 4px !important;
-            font-size: 15px;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .btn-action {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            height: 38px;
-            border-radius: var(--radius-md); 
-            text-decoration: none;
-            color: white;
-            transition: transform 0.15s, opacity 0.15s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .btn-action:active {
-            transform: scale(0.92);
-            opacity: 0.85;
-        }
-
-        .btn-action svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .btn-call { background-color: #10B981; }
-        .btn-wa   { background-color: #25D366; }
-        .btn-sms  { background-color: #3B82F6; }
-        .btn-bip  { background-color: #F97316; }
-
-        .profile-avatar-container {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .profile-avatar {
-            width: 96px; 
-            height: 96px; 
-            border-radius: 50%; 
-            object-fit: cover;
-            border: 3px solid var(--primary); 
-            display: block; 
-            margin: 0 auto 10px auto;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-logout {
-            margin-top: 24px; 
-            width: 100%; 
-            padding: 14px;
-            background: var(--status-red); 
-            color: white; 
-            border: none; 
-            border-radius: var(--radius-md); 
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 15px;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-            transition: opacity 0.2s;
-        }
-        .btn-logout:active { opacity: 0.8; }
-
-        @media (max-width: 768px) {
-            header, .container, .tab-bar, .pwa-install-wrap {
-                width: 100% !important;
-            }
-        }
+        @media (max-width: 420px) { .tab-btn { font-size: 11px; } .chauffeur-info-top { align-items: flex-start; flex-direction: column; gap: 6px; } .chauffeur-header { gap: 10px; } .chauffeur-card { padding: 12px; } .request-form { flex-direction: column; } .request-input, .request-btn { width: 100%; } }
+        @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
     </style>
 </head>
 <body>
-  <!-- Bouton d'installation PWA compact et fonctionnel -->
-  <div class="pwa-install-wrap" id="pwaInstallWrap">
-    <button type="button" class="pwa-install-btn" id="pwaInstallBtn">
-        <span>⬇️ Installer BTAXI</span>
-    </button>
-</div>
-
+    <div class="pwa-install-wrap" id="pwaInstallWrap">
+        <button type="button" class="pwa-install-btn" id="pwaInstallBtn"><span>⬇️ Installer BTAXI</span></button>
+    </div>
     <header>
         <div class="header-brand">
-            <svg class="header-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="32" rx="8" fill="#121212"/>
-                <path d="M6 20h3l1.5-4.5h9l1.5 4.5h3" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="9.5" cy="21.5" r="3" fill="#FFB800"/>
-                <circle cx="22.5" cy="21.5" r="3" fill="#FFB800"/>
-                <path d="M16 6v8m-4-4l4-4 4 4" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg class="header-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="32" height="32" rx="8" fill="#121212"/><path d="M6 20h3l1.5-4.5h9l1.5 4.5h3" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="21.5" r="3" fill="#FFB800"/><circle cx="22.5" cy="21.5" r="3" fill="#FFB800"/><path d="M16 6v8m-4-4l4-4 4 4" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <h1>Btaxi</h1>
         </div>
     </header>
-
-    <div class="container">
-        
-        <!-- ================= ONGLET 1 : ACCUEIL PRÉSENTATION ================= -->
-        <div id="tab-accueil" class="tab-content">
+    <main class="container">
+        <section id="tab-accueil" class="tab-content" aria-labelledby="home-title">
             <div class="hero-banner">
-                <h1>Voyagez plus vite, sans stress</h1>
-                <p>Trouvez un moto-taxi vérifié en temps réel et contactez-le directement d'un simple clic.</p>
-                <button class="hero-cta" onclick="navigateTo('/chauffeurs')">🛵 Voir les Chauffeurs</button>
+                <h1 id="home-title">BENTOUL TAXI</h1>
+                <p>Retrouver un chauffeurs proche<br>de vous en toutes sécurité</p>
+                <form class="request-form" onsubmit="envoyerDemandeCourse(event)">
+                    <input type="text" id="reqAdresse" class="request-input" placeholder="Adresss actuel" required>
+                    <input type="text" id="reqDestination" class="request-input" placeholder="destination" required>
+                    <button type="submit" class="request-btn">Demande</button>
+                </form>
+                <p id="clientRequestFormMessage" class="message" role="status" aria-live="polite"></p>
+                <div id="clientRequestPanel" class="request-chat-panel" hidden aria-live="polite">
+                    <div class="request-panel-heading">
+                        <div>
+                            <strong id="clientRequestStatus">Demande envoyée</strong>
+                            <p id="clientRequestSummary"></p>
+                        </div>
+                        <button type="button" id="btnNewRequest" class="btn-small-neutral">Nouvelle demande</button>
+                    </div>
+                    <p id="clientRequestHint" class="alert-description">Nous recherchons un chauffeur disponible.</p>
+                    <div id="clientChatLog" class="chat-log" aria-live="polite"><p class="chat-empty">Le chat s'ouvrira dès qu'un chauffeur acceptera la course.</p></div>
+                    <form id="clientChatForm" class="chat-form">
+                        <input type="text" id="clientChatInput" maxlength="1500" placeholder="Votre message au chauffeur…" autocomplete="off" disabled required>
+                        <button type="submit" id="clientChatSend" disabled>Envoyer</button>
+                    </form>
+                    <p id="clientChatMessage" class="message" role="status" aria-live="polite"></p>
+                </div>
             </div>
-
-            <h2>Comment ça fonctionne ?</h2>
+            <h2 style="padding:16px 16px 0 16px; margin-bottom:0;">Comment ça fonctionne ?</h2>
             <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🔍</div>
-                    <div class="feature-text">
-                        <h4>1. Localisez votre chauffeur</h4>
-                        <p>Consultez la station et la disponibilité en direct grâce au témoin vert ou rouge.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-text">
-                        <h4>2. Contact direct en 1 clic</h4>
-                        <p>Contactez-le par Appel, WhatsApp, SMS ou bip rapide sans frais intermédiaires.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🛡️</div>
-                    <div class="feature-text">
-                        <h4>3. Déplacez-vous en sécurité</h4>
-                        <p>Visualisez la moto, la plaque, la photo et le point de stationnement officiel.</p>
-                    </div>
-                </div>
+                <div class="feature-item"><div class="feature-icon" aria-hidden="true">🔍</div><div class="feature-text"><h4>1. Localisez votre chauffeur</h4><p>Consultez la station et la disponibilité en direct grâce au témoin vert ou rouge.</p></div></div>
+                <div class="feature-item"><div class="feature-icon" aria-hidden="true">⚡</div><div class="feature-text"><h4>2. Contact direct en 1 clic</h4><p>Contactez-le par Appel, WhatsApp, SMS ou bip rapide sans frais intermédiaires.</p></div></div>
+                <div class="feature-item"><div class="feature-icon" aria-hidden="true">🛡️</div><div class="feature-text"><h4>3. Déplacez-vous en sécurité</h4><p>Visualisez la moto, la plaque, la photo et le point de stationnement officiel.</p></div></div>
             </div>
-        </div>
-
-        <!-- ================= ONGLET 2 : LISTE DES CHAUFFEURS ================= -->
-        <div id="tab-chauffeurs" class="tab-content">
-            <h2>Chauffeurs du réseau</h2>
-            <button id="btnRefresh" class="btn-refresh" onclick="chargerChauffeurs()">
-                <span>🔄</span> Rafraîchir la liste
-            </button>
-            <div id="listeChauffeurs" class="grid-chauffeurs">
-                <p style="text-align: center; color: var(--text-muted); font-size: 15px;">Chargement des données...</p>
+        </section>
+        <section id="tab-chauffeurs" class="tab-content" aria-labelledby="drivers-title">
+            <h2 id="drivers-title">Chauffeurs du réseau</h2>
+            <button id="btnRefresh" class="btn-refresh" type="button" onclick="chargerChauffeurs()"><span aria-hidden="true">🔄</span> Rafraîchir la liste</button>
+            <div id="listeChauffeurs" class="grid-chauffeurs" aria-live="polite"><p style="text-align:center;color:var(--text-muted);font-size:15px;">Chargement des données...</p></div>
+        </section>
+        <section id="tab-demandes" class="tab-content" aria-labelledby="requests-title">
+            <h2 id="requests-title">Demandes des clients</h2>
+            <p class="alert-description">Les demandes encore disponibles apparaissent ici. Acceptez une course pour ouvrir le chat avec le client dans BTAXI.</p>
+            <div class="demand-toolbar">
+                <button id="btnEnableAlerts" type="button" class="alert-enable-btn">🔔 Activer la sonnerie et les notifications</button>
+                <button id="btnRefreshRequests" class="btn-refresh" type="button" onclick="chargerDemandes()">🔄 Actualiser les demandes</button>
             </div>
-        </div>
-
-        <!-- ================= ONGLET 3 : ESPACE CHAUFFEUR ================= -->
-        <div id="tab-login" class="tab-content">
+            <p id="driverAlertStatus" class="message" role="status" aria-live="polite"></p>
+            <div id="listeDemandes" class="grid-chauffeurs" aria-live="polite"><p class="chat-empty">Connectez-vous comme chauffeur pour consulter les demandes.</p></div>
+            <div id="driverChatPanel" class="chat-panel" hidden>
+                <div class="chat-panel-header">
+                    <div><h3 id="driverChatTitle">Chat de la course</h3><p id="driverChatSummary"></p></div>
+                    <button type="button" id="btnCloseDriverChat" class="btn-small-neutral">Fermer le chat</button>
+                </div>
+                <div id="driverChatLog" class="chat-log" aria-live="polite"><p class="chat-empty">Chargement du chat…</p></div>
+                <form id="driverChatForm" class="chat-form">
+                    <input type="text" id="driverChatInput" maxlength="1500" placeholder="Écrire au client…" autocomplete="off" required>
+                    <button type="submit" id="driverChatSend">Envoyer</button>
+                </form>
+                <p id="driverChatMessage" class="message" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+        <section id="tab-login" class="tab-content" aria-label="Espace chauffeur">
             <div id="view-login" class="form-container">
                 <h2>Connexion Chauffeur</h2>
                 <form id="loginForm">
-                    <div class="form-group">
-                        <label>Nom d'utilisateur :</label>
-                        <input type="text" id="loginUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Mot de passe :</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
+                    <div class="form-group"><label for="loginUsername">Nom d'utilisateur :</label><input type="text" id="loginUsername" autocomplete="username" required></div>
+                    <div class="form-group"><label for="loginPassword">Mot de passe :</label><input type="password" id="loginPassword" autocomplete="current-password" required></div>
                     <button type="submit" class="btn-submit">Se connecter</button>
                 </form>
-                <p id="loginMessage" class="message"></p>
+                <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
             </div>
-
-            <div id="view-profil" class="profile-container" style="display: none;">
+            <div id="view-profil" class="profile-container" style="display:none;">
                 <h2>Mon Espace Chauffeur</h2>
-                
                 <div class="profile-avatar-container">
                     <img id="profPhotoDisplay" class="profile-avatar" src="https://via.placeholder.com/100?text=Photo" alt="Photo de profil">
-                    <label style="cursor: pointer; color: #3B82F6; font-size: 15px; font-weight: 600;">
-                        📷 Modifier ma photo
-                        <input type="file" id="uploadPhotoInput" accept="image/*" style="display: none;" onchange="handlePhotoChange(event)">
-                    </label>
+                    <label for="uploadPhotoInput" style="cursor:pointer;color:#3B82F6;font-size:15px;font-weight:600;">📷 Modifier ma photo</label>
+                    <input type="file" id="uploadPhotoInput" accept="image/*" style="display:none;" onchange="handlePhotoChange(event)">
                 </div>
-
-                <div class="form-group">
-                    <label>Mon Statut en direct :</label>
-                    <select id="selectStatut" onchange="changerStatut()">
-                        <option value="Disponible">🟢 Actif (Visible & En service)</option>
-                        <option value="Indisponible">🔴 Inactif (Occupé / En pause)</option>
-                    </select>
-                </div>
-                <p id="statusMsg" class="message"></p>
-
-                <hr style="margin: 18px 0; border: none; border-top: 1px solid var(--border-color);">
-
+                <div class="form-group"><label for="selectStatut">Mon Statut en direct :</label><select id="selectStatut" onchange="changerStatut()"><option value="Disponible">🟢 Actif (Visible &amp; En service)</option><option value="Indisponible">🔴 Inactif (Occupé / En pause)</option></select></div>
+                <p id="statusMsg" class="message" role="status" aria-live="polite"></p>
+                <hr style="margin:18px 0;border:none;border-top:1px solid var(--border-color);">
                 <h3>Mettre à jour mon profil</h3>
                 <form id="updateProfileForm">
-                    <div class="form-group"><label>Nom complet :</label><input type="text" id="profNom" required></div>
-                    <div class="form-group"><label>Téléphone :</label><input type="tel" id="profPhone" required></div>
-                    <div class="form-group"><label>Email :</label><input type="email" id="profEmail" required></div>
-                    <div class="form-group"><label>Adresse :</label><input type="text" id="profAdresse" placeholder="Ex: Delmas 31, Rue..." required></div>
-                    <div class="form-group"><label>Station habituelle :</label><input type="text" id="profStation" placeholder="Ex: Carrefour Aéroport" required></div>
-                    <div class="form-group"><label>Marque Moto :</label><input type="text" id="profMotoMarque" required></div>
-                    <div class="form-group"><label>Couleur Moto :</label><input type="text" id="profMotoCouleur" required></div>
-                    <div class="form-group"><label>Plaque d'immatriculation :</label><input type="text" id="profPlaque"></div>
-                    <div class="form-group"><label>NIF ou CIN :</label><input type="text" id="profNifCin" required></div>
+                    <div class="form-group"><label for="profNom">Nom complet :</label><input type="text" id="profNom" autocomplete="name" required></div>
+                    <div class="form-group"><label for="profPhone">Téléphone :</label><input type="tel" id="profPhone" autocomplete="tel" required></div>
+                    <div class="form-group"><label for="profEmail">Email :</label><input type="email" id="profEmail" autocomplete="email" required></div>
+                    <div class="form-group"><label for="profAdresse">Adresse :</label><input type="text" id="profAdresse" placeholder="Ex: Delmas 31, Rue..." required></div>
+                    <div class="form-group"><label for="profStation">Station habituelle :</label><input type="text" id="profStation" placeholder="Ex: Carrefour Aéroport" required></div>
+                    <div class="form-group"><label for="profMotoMarque">Marque Moto :</label><input type="text" id="profMotoMarque" required></div>
+                    <div class="form-group"><label for="profMotoCouleur">Couleur Moto :</label><input type="text" id="profMotoCouleur" required></div>
+                    <div class="form-group"><label for="profPlaque">Plaque d'immatriculation :</label><input type="text" id="profPlaque"></div>
+                    <div class="form-group"><label for="profNifCin">NIF ou CIN :</label><input type="text" id="profNifCin" required></div>
                     <button type="submit" class="btn-submit">💾 Enregistrer</button>
                 </form>
-                <p id="profileUpdateMsg" class="message"></p>
-
-                <button onclick="deconnexion()" class="btn-logout">Se déconnecter</button>
+                <p id="profileUpdateMsg" class="message" role="status" aria-live="polite"></p>
+                <button type="button" onclick="deconnexion()" class="btn-logout">Se déconnecter</button>
             </div>
-        </div>
-
-        <!-- ================= ONGLET 4 : INSCRIPTION CHAUFFEUR ================= -->
-        <div id="tab-inscription" class="tab-content">
+        </section>
+        <section id="tab-inscription" class="tab-content" aria-label="Inscription chauffeur">
             <div class="form-container">
                 <h2>Rejoindre le Réseau</h2>
                 <form id="registrationForm">
-                    <div class="form-group"><label>Nom complet :</label><input type="text" id="nom" required></div>
-                    <div class="form-group"><label>Téléphone :</label><input type="tel" id="phone" placeholder="Ex: 50937000000" required></div>
-                    <div class="form-group"><label>Email :</label><input type="email" id="email" required></div>
-                    <div class="form-group"><label>Adresse de résidence :</label><input type="text" id="adresse" placeholder="Ex: Pétion-Ville, Rue Panaméricaine" required></div>
-                    <div class="form-group"><label>Station Moto :</label><input type="text" id="station" placeholder="Ex: Station Place Boyer" required></div>
-                    <div class="form-group"><label>Nom d'utilisateur :</label><input type="text" id="username" required></div>
-                    <div class="form-group"><label>Mot de passe :</label><input type="password" id="password" required></div>
-                    <div class="form-group"><label>Marque Moto :</label><input type="text" id="marqueMoto" placeholder="Ex: Dayun, Suzuki" required></div>
-                    <div class="form-group"><label>Couleur Moto :</label><input type="text" id="couleurMoto" required></div>
-                    <div class="form-group"><label>Plaque d'immatriculation :</label><input type="text" id="plaque"></div>
-                    <div class="form-group"><label>NIF ou CIN :</label><input type="text" id="nifCin" required></div>
+                    <div class="form-group"><label for="nom">Nom complet :</label><input type="text" id="nom" autocomplete="name" required></div>
+                    <div class="form-group"><label for="phone">Téléphone :</label><input type="tel" id="phone" autocomplete="tel" placeholder="Ex: 50937000000" required></div>
+                    <div class="form-group"><label for="email">Email :</label><input type="email" id="email" autocomplete="email" required></div>
+                    <div class="form-group"><label for="adresse">Adresse de résidence :</label><input type="text" id="adresse" placeholder="Ex: Pétion-Ville, Rue Panaméricaine" required></div>
+                    <div class="form-group"><label for="station">Station Moto :</label><input type="text" id="station" placeholder="Ex: Station Place Boyer" required></div>
+                    <div class="form-group"><label for="username">Nom d'utilisateur :</label><input type="text" id="username" autocomplete="username" required></div>
+                    <div class="form-group"><label for="password">Mot de passe :</label><input type="password" id="password" autocomplete="new-password" minlength="8" required></div>
+                    <div class="form-group"><label for="marqueMoto">Marque Moto :</label><input type="text" id="marqueMoto" placeholder="Ex: Dayun, Suzuki" required></div>
+                    <div class="form-group"><label for="couleurMoto">Couleur Moto :</label><input type="text" id="couleurMoto" required></div>
+                    <div class="form-group"><label for="plaque">Plaque d'immatriculation :</label><input type="text" id="plaque"></div>
+                    <div class="form-group"><label for="nifCin">NIF ou CIN :</label><input type="text" id="nifCin" required></div>
                     <button type="submit" class="btn-submit">Créer mon compte</button>
                 </form>
-                <p id="regMessage" class="message"></p>
+                <p id="regMessage" class="message" role="status" aria-live="polite"></p>
             </div>
-        </div>
-
-    </div>
-
-    <!-- NAVBAR BASSE avec liens propres -->
-    <nav class="tab-bar">
-        <a href="/accueil" class="tab-btn active" id="btn-accueil" onclick="handleNavClick(event, '/accueil')">
-            <span class="icon">🏠</span>Accueil
-        </a>
-        <a href="/chauffeurs" class="tab-btn" id="btn-chauffeurs" onclick="handleNavClick(event, '/chauffeurs')">
-            <span class="icon">🛵</span>Chauffeurs
-        </a>
-        <a href="/login" class="tab-btn" id="btn-login" onclick="handleNavClick(event, '/login')">
-            <span class="icon">👤</span>Mon Espace
-        </a>
-        <a href="/inscription" class="tab-btn" id="btn-action" onclick="handleAuthActionLink(event)">
-            <span class="icon">📝</span>S'inscrire
-        </a>
+        </section>
+    </main>
+    <nav class="tab-bar" aria-label="Navigation principale">
+        <a href="#/accueil" class="tab-btn active" id="btn-accueil" onclick="handleNavClick(event,'/accueil')"><span class="icon" aria-hidden="true">🏠</span>Acceuil</a>
+        <a href="#/chauffeurs" class="tab-btn" id="btn-chauffeurs" onclick="handleNavClick(event,'/chauffeurs')"><span class="icon" aria-hidden="true">🛵</span>Chaffeurs</a>
+        <a href="#/demandes" class="tab-btn" id="btn-demandes" onclick="handleNavClick(event,'/demandes')"><span class="icon" aria-hidden="true">📨</span>Demandes</a>
+        <a href="#/login" class="tab-btn" id="btn-login" onclick="handleNavClick(event,'/login')"><span class="icon" aria-hidden="true">👤</span>Profile</a>
+        <a href="#/inscription" class="tab-btn" id="btn-action" onclick="handleAuthActionLink(event)"><span class="icon" aria-hidden="true">📝</span>Signuo/login</a>
     </nav>
-
-    <script src="service-worker.js"></script>
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVWcukwxIRSRGJfDvqoMm1jPiYCBCjDKZ-QFZKzIPzZ9mo8zu88jZBvYd-F_i1K5ycow/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLV3lfxOk987RRVUpPuc3ZymtIJEvj6UbGMrJfVtc6D3x-tAwhofUsXFSmWhp5OFY6zA/exec";
         let base64PhotoEnAttente = "";
+        let requeteChauffeurs = 0;
 
-        const routes = {
-            "/": "tab-accueil",
-            "/accueil": "tab-accueil",
-            "/chauffeurs": "tab-chauffeurs",
-            "/login": "tab-login",
-            "/inscription": "tab-inscription"
-        };
+        async function lireReponseJson(response) {
+            if (!response.ok) throw new Error('Réponse serveur ' + response.status);
+            const result = await response.json();
+            if (!result || typeof result !== 'object') throw new Error('Réponse serveur invalide');
+            return result;
+        }
 
+        const routes = { "/": "tab-accueil", "/accueil": "tab-accueil", "/chauffeurs": "tab-chauffeurs", "/demandes": "tab-demandes", "/login": "tab-login", "/inscription": "tab-inscription" };
+
+        function getBasePath() {
+            const firstSegment = window.location.pathname.split('/').filter(Boolean)[0];
+            return firstSegment && !routes['/' + firstSegment] ? '/' + firstSegment : '';
+        }
+        function routeFromPath(pathname) {
+            const basePath = getBasePath();
+            const hashRoute = window.location.hash.replace(/^#/, '');
+            let path = routes[hashRoute] ? hashRoute : (pathname || '/');
+            if (basePath && (path === basePath || path.startsWith(basePath + '/'))) path = path.slice(basePath.length) || '/';
+            if (!path.startsWith('/')) path = '/' + path;
+            return routes[path] ? path : '/';
+        }
         function navigateTo(path, push = true) {
-            let cleanPath = path;
-            const segments = window.location.pathname.split('/');
-            if (segments.length > 1 && routes["/" + segments[1]]) {
-                cleanPath = "/" + segments[1];
-            }
-            
-            let targetTab = routes[path] || routes[cleanPath] || "tab-accueil";
-
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
-            const targetContent = document.getElementById(targetTab);
-            if (targetContent) targetContent.classList.add('active');
-
-            for (let route in routes) {
-                if (routes[route] === targetTab) {
-                    let btnId = route === "/accueil" || route === "/" ? "btn-accueil" : "btn-" + route.replace("/", "");
-                    let btn = document.getElementById(btnId);
-                    if (btn) btn.classList.add('active');
-                }
-            }
-
+            const route = routes[path] ? path : routeFromPath(path);
+            const targetTab = routes[route] || 'tab-accueil';
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(targetTab)?.classList.add('active');
+            const buttonId = route === '/' || route === '/accueil' ? 'btn-accueil' : 'btn-' + route.slice(1);
+            document.getElementById(buttonId)?.classList.add('active');
             if (push) {
-                let baseRepo = window.location.pathname.includes('/btaxi') ? '/btaxi' : '';
-                let finalPath = path === '/' ? baseRepo + '/' : baseRepo + path;
-                history.pushState({ path: path }, "", finalPath);
+                const finalPath = getBasePath() + '/#' + (route === '/' ? '/accueil' : route);
+                if (window.location.pathname + window.location.hash !== finalPath) history.pushState({path:route},'',finalPath);
             }
-
-            if (targetTab === 'tab-chauffeurs') {
-                chargerChauffeurs();
-            }
-            window.scrollTo(0, 0);
+            if (targetTab === 'tab-chauffeurs') chargerChauffeurs();
+            if (targetTab === 'tab-demandes') chargerDemandes();
+            window.scrollTo(0,0);
+        }
+        function handleNavClick(event,path) { event.preventDefault(); navigateTo(path); }
+        function handleAuthActionLink(event) {
+            event.preventDefault();
+            let connected = false;
+            try { connected = !!localStorage.getItem('moto_user'); } catch (error) { console.warn('Stockage local indisponible.'); }
+            connected ? deconnexion() : navigateTo('/inscription');
+        }
+        window.addEventListener('popstate',() => navigateTo(routeFromPath(window.location.pathname),false));
+        window.addEventListener('hashchange',() => navigateTo(routeFromPath(window.location.pathname),false));
+        function updateAuthButtonUI(connected) {
+            const button = document.getElementById('btn-action');
+            if (!button) return;
+            button.innerHTML = connected ? '<span class="icon" aria-hidden="true">🚪</span>Déconnexion' : '<span class="icon" aria-hidden="true">📝</span>S\'inscrire';
+            button.style.color = connected ? '#EF4444' : '';
         }
 
-        function handleNavClick(e, path) {
+        async function envoyerDemandeCourse(e) {
             e.preventDefault();
-            navigateTo(path);
-        }
-
-        function handleAuthActionLink(e) {
-            e.preventDefault();
-            const isConnected = localStorage.getItem('moto_user');
-            if (isConnected) {
-                deconnexion();
-            } else {
-                navigateTo('/inscription');
+            const depart = document.getElementById('reqAdresse').value.trim();
+            const destination = document.getElementById('reqDestination').value.trim();
+            const button = e.currentTarget.querySelector('[type="submit"]');
+            const message = document.getElementById('clientRequestFormMessage');
+            if (!depart || !destination) return;
+            if (button.disabled) return;
+            button.disabled = true;
+            updateMessage(message, '#334155', 'Envoi de votre demande…');
+            try {
+                const result = await envoyerAuServeur({ action: 'createRequest', depart: depart, destination: destination });
+                if (!result.success || !result.request) throw new Error(result.message || 'Impossible d’envoyer la demande.');
+                clientDemandeCourante = {
+                    id: result.request.id,
+                    clientToken: result.request.clientToken,
+                    depart: result.request.depart,
+                    destination: result.request.destination,
+                    statut: result.request.statut || 'En attente'
+                };
+                try { localStorage.setItem('btaxi_client_request', JSON.stringify(clientDemandeCourante)); } catch (storageError) { console.warn('Demande conservée uniquement dans cette page.'); }
+                afficherDemandeClient();
+                updateMessage(message, '#047857', 'Demande envoyée aux chauffeurs disponibles. Gardez cette page ouverte pour recevoir la réponse.');
+                document.getElementById('clientRequestPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                demarrerSuiviDemandeClient();
+            } catch (error) {
+                updateMessage(message, '#b91c1c', error.message || 'Erreur de connexion. Vérifiez votre connexion puis réessayez.');
+                console.error('Création de la demande impossible :', error);
+            } finally {
+                button.disabled = false;
             }
         }
 
-        window.addEventListener('popstate', () => {
-            let currentPath = window.location.pathname.replace(/^\/[^/]+/, '/');
-            if (window.location.pathname === '/' || window.location.pathname === '') currentPath = '/';
-            navigateTo(window.location.pathname, false);
+        async function chargerChauffeurs() {
+            const container = document.getElementById('listeChauffeurs');
+            const requestId = ++requeteChauffeurs;
+            container.textContent = 'Recherche des chauffeurs en direct...';
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL,{headers:{Accept:'application/json'}});
+                const data = await lireReponseJson(response);
+                if (requestId !== requeteChauffeurs) return;
+                if (!Array.isArray(data) || data.length === 0) { container.textContent='Aucun chauffeur enregistré pour le moment.'; return; }
+                const fragment=document.createDocumentFragment();
+                data.forEach(driver=>fragment.appendChild(creerCarteChauffeur(driver||{})));
+                container.replaceChildren(fragment);
+            } catch (error) {
+                if (requestId !== requeteChauffeurs) return;
+                container.textContent='Impossible de charger les chauffeurs. Vérifiez votre connexion puis réessayez.';
+                console.error('Chargement des chauffeurs impossible:',error);
+            }
+        }
+        function creerCarteChauffeur(driver) {
+            const available=String(driver.statut||'').trim().toLocaleLowerCase('fr')==='disponible';
+            const phone=String(driver.phone||'').trim().replace(/[^0-9+]/g,'');
+            const waPhone=phone.replace(/\D/g,'');
+            const card=document.createElement('article');
+            card.className=`chauffeur-card ${available?'card-disponible':'card-indisponible'}`;
+            const header=document.createElement('div'); header.className='chauffeur-header';
+            const wrapper=document.createElement('div'); wrapper.className='avatar-wrapper';
+            const avatar=document.createElement('img'); avatar.className='avatar-img'; avatar.alt=driver.nom?'Photo de '+driver.nom:'Photo du chauffeur'; avatar.loading='lazy';
+            const photo=String(driver.photo||'');
+            if(/^https:\/\//i.test(photo)||/^data:image\/(png|jpeg|webp|gif);base64,/i.test(photo)) avatar.src=photo;
+            avatar.addEventListener('error',()=>avatar.removeAttribute('src'),{once:true});
+            const dot=document.createElement('span'); dot.className=`status-dot ${available?'dot-green':'dot-red'}`; dot.title=available?'Disponible':'Indisponible'; wrapper.append(avatar,dot);
+            const info=document.createElement('div'); info.className='chauffeur-info';
+            const top=document.createElement('div'); top.className='chauffeur-info-top';
+            const name=document.createElement('h3'); name.textContent=driver.nom||'Chauffeur';
+            const status=document.createElement('span'); status.className=`status-pill ${available?'pill-green':'pill-red'}`; status.textContent=available?'🟢 En service':'🔴 Hors service'; top.append(name,status); info.append(top);
+            [['station-badge','📍 '+(driver.station||'Station non précisée')],['','🏍️ '+[driver.marque,driver.couleur].filter(Boolean).join(' ')],['','🏷️ Plaque : '+(driver.plaque||'En attente')]].forEach(([cls,text])=>{const p=document.createElement('p');if(cls)p.className=cls;p.textContent=text;info.appendChild(p);});
+            header.append(wrapper,info);
+            const contacts=document.createElement('div'); contacts.className='contact-grid';
+            const actions=[
+                {label:'Appeler le chauffeur',cls:'btn-call',href:phone?'tel:'+phone:'',d:'M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'},
+                {label:'Contacter sur WhatsApp',cls:'btn-wa',href:waPhone?`https://wa.me/${waPhone}?text=${encodeURIComponent('Bonjour, je souhaite une course moto')}`:'',d:'M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.17 1.77 2.7 4.29 3.78.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z'},
+                {label:'Envoyer un SMS',cls:'btn-sms',href:phone?`sms:${phone}?body=${encodeURIComponent("Bonjour, j'ai besoin d'une course moto")}`:'',d:'M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z'},
+                {label:'Faire sonner le téléphone',cls:'btn-bip',href:phone?'tel:'+phone:'',d:'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'}
+            ];
+            actions.forEach(action=>{
+                const link=document.createElement('a');link.className=`btn-action ${action.cls}`;link.setAttribute('aria-label',action.label);link.title=action.label;
+                if(action.href)link.href=action.href;else{link.href='#';link.setAttribute('aria-disabled','true');link.addEventListener('click',e=>e.preventDefault());}
+                if(action.cls==='btn-wa'){link.target='_blank';link.rel='noopener noreferrer';}
+                const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
+                const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',action.d);svg.appendChild(path);link.appendChild(svg);contacts.appendChild(link);
+            });
+            card.append(header,contacts);return card;
+        }
+        function updateMessage(message,color,text){message.style.color=color;message.textContent=text;}
+
+        document.getElementById('registrationForm').addEventListener('submit',function(event){
+            event.preventDefault();const msg=document.getElementById('regMessage');const button=this.querySelector('[type="submit"]');if(button.disabled)return;button.disabled=true;updateMessage(msg,'#333','Création du compte...');
+            const payload={action:'register',nom:document.getElementById('nom').value.trim(),phone:document.getElementById('phone').value.trim(),email:document.getElementById('email').value.trim(),adresse:document.getElementById('adresse').value.trim(),station:document.getElementById('station').value.trim(),username:document.getElementById('username').value.trim(),password:document.getElementById('password').value,marqueMoto:document.getElementById('marqueMoto').value.trim(),couleurMoto:document.getElementById('couleurMoto').value.trim(),plaque:document.getElementById('plaque').value.trim(),nifCin:document.getElementById('nifCin').value.trim()};
+            fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(lireReponseJson).then(result=>{if(result.success){updateMessage(msg,'green','Compte créé ! Connexion en cours...');this.reset();button.disabled=true;setTimeout(()=>navigateTo('/login'),1500);}else updateMessage(msg,'red',result.message||"Erreur lors de l'enregistrement.");}).catch(()=>updateMessage(msg,'red','Erreur de connexion au serveur.')).finally(()=>{if(msg.textContent!=='Compte créé ! Connexion en cours...')button.disabled=false;});
+        });
+        document.getElementById('loginForm').addEventListener('submit',function(event){
+            event.preventDefault();const msg=document.getElementById('loginMessage');const button=this.querySelector('[type="submit"]');if(button.disabled)return;button.disabled=true;updateMessage(msg,'#333','Connexion en cours...');
+            const payload={action:'login',username:document.getElementById('loginUsername').value.trim(),password:document.getElementById('loginPassword').value};
+            fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(lireReponseJson).then(result=>{if(result.success&&result.driver){localStorage.setItem('moto_user',JSON.stringify(result.driver));updateMessage(msg,'green','Connexion réussie.');afficherProfil(result.driver);updateAuthButtonUI(true);demarrerPollingDemandes();}else updateMessage(msg,'red',result.message||'Identifiants invalides.');}).catch(()=>updateMessage(msg,'red','Erreur de communication.')).finally(()=>{button.disabled=false;});
+        });
+        function afficherProfil(driver){
+            document.getElementById('view-login').style.display='none';document.getElementById('view-profil').style.display='block';
+            const fields={profNom:driver.nom,profPhone:driver.phone,profEmail:driver.email,profAdresse:driver.adresse,profStation:driver.station,profMotoMarque:driver.marque,profMotoCouleur:driver.couleur,profPlaque:driver.plaque,profNifCin:driver.nifCin};
+            Object.entries(fields).forEach(([id,value])=>{document.getElementById(id).value=value||'';});
+            document.getElementById('selectStatut').value=driver.statut||'Indisponible';document.getElementById('profPhotoDisplay').src=driver.photo||'https://via.placeholder.com/100?text=Photo';
+        }
+        function handlePhotoChange(event){
+            const file=event.target.files[0];if(!file)return;const msg=document.getElementById('profileUpdateMsg');
+            if(!file.type.startsWith('image/')){updateMessage(msg,'red','Veuillez sélectionner une image valide.');return;}
+            if(file.size>8*1024*1024){updateMessage(msg,'red','La photo doit faire moins de 8 Mo.');event.target.value='';return;}
+            const reader=new FileReader();reader.onerror=()=>updateMessage(msg,'red','Impossible de lire cette photo.');
+            reader.onload=e=>{const image=new Image();image.onerror=()=>updateMessage(msg,'red','Cette image ne peut pas être utilisée.');image.onload=()=>{const canvas=document.createElement('canvas');const max=480;let w=image.width,h=image.height;const scale=Math.min(1,max/Math.max(w,h));w=Math.round(w*scale);h=Math.round(h*scale);canvas.width=w;canvas.height=h;const context=canvas.getContext('2d');if(!context){updateMessage(msg,'red','Traitement de la photo indisponible.');return;}context.drawImage(image,0,0,w,h);base64PhotoEnAttente=canvas.toDataURL('image/jpeg',.72);document.getElementById('profPhotoDisplay').src=base64PhotoEnAttente;updateMessage(msg,'#333','Photo prête. Enregistrez votre profil pour la publier.');};image.src=e.target.result;};reader.readAsDataURL(file);
+        }
+        document.getElementById('updateProfileForm').addEventListener('submit',function(event){
+            event.preventDefault();let driver;try{driver=JSON.parse(localStorage.getItem('moto_user')||'null');}catch(error){driver=null;}if(!driver)return;
+            const msg=document.getElementById('profileUpdateMsg');const button=this.querySelector('[type="submit"]');if(button.disabled)return;button.disabled=true;updateMessage(msg,'#333','Enregistrement en cours...');
+            const payload={action:'updateProfile',username:driver.username,nom:document.getElementById('profNom').value.trim(),phone:document.getElementById('profPhone').value.trim(),email:document.getElementById('profEmail').value.trim(),adresse:document.getElementById('profAdresse').value.trim(),station:document.getElementById('profStation').value.trim(),marqueMoto:document.getElementById('profMotoMarque').value.trim(),couleurMoto:document.getElementById('profMotoCouleur').value.trim(),plaque:document.getElementById('profPlaque').value.trim(),nifCin:document.getElementById('profNifCin').value.trim(),photo:base64PhotoEnAttente||driver.photo||''};
+            fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(lireReponseJson).then(result=>{if(result.success){Object.assign(driver,{nom:payload.nom,phone:payload.phone,email:payload.email,adresse:payload.adresse,station:payload.station,marque:payload.marqueMoto,couleur:payload.couleurMoto,plaque:payload.plaque,nifCin:payload.nifCin});if(base64PhotoEnAttente)driver.photo=base64PhotoEnAttente;localStorage.setItem('moto_user',JSON.stringify(driver));base64PhotoEnAttente='';updateMessage(msg,'green','Profil mis à jour avec succès !');}else updateMessage(msg,'red',result.message||'Erreur lors de la mise à jour.');}).catch(()=>updateMessage(msg,'red','Erreur de connexion.')).finally(()=>{button.disabled=false;});
+        });
+        function changerStatut(){
+            let driver;try{driver=JSON.parse(localStorage.getItem('moto_user')||'null');}catch(error){driver=null;}if(!driver)return;
+            const select=document.getElementById('selectStatut');const oldStatus=driver.statut||'Indisponible';const newStatus=select.value;const msg=document.getElementById('statusMsg');select.disabled=true;updateMessage(msg,'#555','Mise à jour...');
+            fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'updateStatus',username:driver.username,statut:newStatus})}).then(lireReponseJson).then(result=>{if(result.success){driver.statut=newStatus;localStorage.setItem('moto_user',JSON.stringify(driver));updateMessage(msg,'green','Statut mis à jour : '+newStatus);}else{select.value=oldStatus;updateMessage(msg,'red',result.message||'Échec du changement.');}}).catch(()=>{select.value=oldStatus;updateMessage(msg,'red','Erreur réseau.');}).finally(()=>{select.disabled=false;});
+        }
+        function deconnexion(){arreterPollingDemandes();try{localStorage.removeItem('moto_user');}catch(error){console.warn('Impossible de supprimer la session locale.');}base64PhotoEnAttente='';document.getElementById('view-login').style.display='block';document.getElementById('view-profil').style.display='none';document.getElementById('loginForm').reset();updateMessage(document.getElementById('loginMessage'),'','');updateAuthButtonUI(false);navigateTo('/accueil');}
+        window.addEventListener('load',()=>{
+            let driver=null;try{driver=JSON.parse(localStorage.getItem('moto_user')||'null');}catch(error){try{localStorage.removeItem('moto_user');}catch(storageError){console.warn('Stockage local indisponible.');}}
+            updateAuthButtonUI(!!driver);if(driver&&typeof driver==='object'){afficherProfil(driver);demarrerPollingDemandes();}navigateTo(routeFromPath(window.location.pathname),false);
+            restaurerDemandeClient();
+            if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('service-worker.js').catch(error=>console.warn('Le service worker n’a pas pu être enregistré :',error));
         });
 
-        function updateAuthButtonUI(isConnected) {
-            const btn = document.getElementById('btn-action');
-            if (isConnected) {
-                btn.innerHTML = '<span class="icon">🚪</span>Déconnexion';
-                btn.style.color = "#EF4444";
-            } else {
-                btn.innerHTML = '<span class="icon">📝</span>S\'inscrire';
-                btn.style.color = "";
+        // -----------------------------------------------------------------
+        // BTAXI : demandes de course, notifications sonores et chat intégré
+        // -----------------------------------------------------------------
+        let clientDemandeCourante = null;
+        let timerSuiviClient = null;
+        let timerPollingDemandes = null;
+        let timerChatChauffeur = null;
+        let idsDemandesConnues = null;
+        let demandeChatChauffeurActive = '';
+        let contexteAudioBtaxi = null;
+
+        async function envoyerAuServeur(payload) {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            return lireReponseJson(response);
+        }
+
+        async function lireDepuisServeur(params) {
+            const query = new URLSearchParams(params);
+            query.set('_', String(Date.now())); // évite les réponses GET mises en cache
+            const response = await fetch(GOOGLE_SCRIPT_URL + '?' + query.toString(), { headers: { Accept: 'application/json' }, cache: 'no-store' });
+            return lireReponseJson(response);
+        }
+
+        function obtenirChauffeurConnecte() {
+            try {
+                const driver = JSON.parse(localStorage.getItem('moto_user') || 'null');
+                return driver && driver.username ? driver : null;
+            } catch (error) { return null; }
+        }
+
+        function restaurerDemandeClient() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('btaxi_client_request') || 'null');
+                if (saved && saved.id && saved.clientToken) {
+                    clientDemandeCourante = saved;
+                    afficherDemandeClient();
+                    demarrerSuiviDemandeClient();
+                }
+            } catch (error) {
+                console.warn('La demande client sauvegardée est illisible.');
             }
         }
 
-        function chargerChauffeurs() {
-            const container = document.getElementById('listeChauffeurs');
-            container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 15px;'>Recherche des chauffeurs en direct...</p>";
+        function afficherDemandeClient() {
+            if (!clientDemandeCourante) return;
+            const panel = document.getElementById('clientRequestPanel');
+            panel.hidden = false;
+            document.getElementById('clientRequestSummary').textContent = 'Départ : ' + clientDemandeCourante.depart + ' — Destination : ' + clientDemandeCourante.destination;
+            const accepted = String(clientDemandeCourante.statut || '').toLocaleLowerCase('fr') === 'acceptée';
+            document.getElementById('clientRequestStatus').textContent = accepted ? '✅ Votre course est acceptée' : '⏳ Demande envoyée — en attente';
+            document.getElementById('clientRequestHint').textContent = accepted
+                ? 'Le chauffeur ' + (clientDemandeCourante.acceptedName || '') + ' a accepté. Vous pouvez discuter ci-dessous.'
+                : 'Nous recherchons un chauffeur disponible. Le chat sera activé après acceptation.';
+            document.getElementById('clientChatInput').disabled = !accepted;
+            document.getElementById('clientChatSend').disabled = !accepted;
+        }
 
-            fetch(GOOGLE_SCRIPT_URL)
-                .then(res => res.json())
-                .then(data => {
-                    container.innerHTML = "";
-                    if (!data || data.length === 0) {
-                        container.innerHTML = "<p style='text-align:center; color: var(--text-muted); font-size: 15px;'>Aucun chauffeur enregistré pour le moment.</p>";
+        function demarrerSuiviDemandeClient() {
+            if (timerSuiviClient) clearInterval(timerSuiviClient);
+            if (!clientDemandeCourante) return;
+            verifierStatutDemandeClient();
+            timerSuiviClient = setInterval(verifierStatutDemandeClient, 5000);
+        }
+
+        async function verifierStatutDemandeClient() {
+            if (!clientDemandeCourante) return;
+            try {
+                const result = await lireDepuisServeur({ action: 'getRequest', requestId: clientDemandeCourante.id, clientToken: clientDemandeCourante.clientToken });
+                if (!result.success || !result.request) return;
+                const before = clientDemandeCourante.statut;
+                Object.assign(clientDemandeCourante, result.request);
+                try { localStorage.setItem('btaxi_client_request', JSON.stringify(clientDemandeCourante)); } catch (error) {}
+                afficherDemandeClient();
+                if (before !== 'Acceptée' && clientDemandeCourante.statut === 'Acceptée') {
+                    updateMessage(document.getElementById('clientChatMessage'), '#047857', 'Un chauffeur a accepté votre course. Vous pouvez lui écrire.');
+                }
+                if (clientDemandeCourante.statut === 'Acceptée') await chargerMessagesClient();
+            } catch (error) {
+                console.warn('Suivi de la demande momentanément indisponible :', error);
+            }
+        }
+
+        async function chargerMessagesClient() {
+            if (!clientDemandeCourante || clientDemandeCourante.statut !== 'Acceptée') return;
+            try {
+                const result = await lireDepuisServeur({ action: 'getMessages', requestId: clientDemandeCourante.id, clientToken: clientDemandeCourante.clientToken });
+                if (result.success && Array.isArray(result.messages)) afficherMessagesDans('clientChatLog', result.messages, 'client');
+            } catch (error) { console.warn('Chargement du chat client impossible :', error); }
+        }
+
+        document.getElementById('clientChatForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            if (!clientDemandeCourante || clientDemandeCourante.statut !== 'Acceptée') return;
+            const input = document.getElementById('clientChatInput');
+            const button = document.getElementById('clientChatSend');
+            const text = input.value.trim();
+            if (!text || button.disabled) return;
+            button.disabled = true;
+            try {
+                const result = await envoyerAuServeur({ action: 'sendMessage', senderType: 'client', requestId: clientDemandeCourante.id, clientToken: clientDemandeCourante.clientToken, message: text });
+                if (!result.success) throw new Error(result.message || 'Message non envoyé.');
+                input.value = '';
+                updateMessage(document.getElementById('clientChatMessage'), '#047857', 'Message envoyé.');
+                await chargerMessagesClient();
+            } catch (error) {
+                updateMessage(document.getElementById('clientChatMessage'), '#b91c1c', error.message || 'Erreur pendant l’envoi du message.');
+            } finally { button.disabled = clientDemandeCourante.statut !== 'Acceptée'; }
+        });
+
+        document.getElementById('btnNewRequest').addEventListener('click', function() {
+            if (timerSuiviClient) clearInterval(timerSuiviClient);
+            timerSuiviClient = null;
+            clientDemandeCourante = null;
+            try { localStorage.removeItem('btaxi_client_request'); } catch (error) {}
+            document.getElementById('clientRequestPanel').hidden = true;
+            document.getElementById('clientRequestFormMessage').textContent = '';
+            document.getElementById('clientChatLog').replaceChildren();
+        });
+
+        function demarrerPollingDemandes() {
+            const dejaActif = !!timerPollingDemandes;
+            if (timerPollingDemandes) clearInterval(timerPollingDemandes);
+            if (!dejaActif) idsDemandesConnues = null;
+            const status = document.getElementById('driverAlertStatus');
+            if (localStorage.getItem('btaxi_alertes_active') === '1') {
+                updateMessage(status, '#047857', 'Les alertes sont activées sur cet appareil. Gardez BTAXI ouvert pour recevoir les alertes en direct.');
+            }
+            chargerDemandes({ silencieux: true });
+            timerPollingDemandes = setInterval(function() { chargerDemandes({ silencieux: true }); }, 10000);
+        }
+
+        function arreterPollingDemandes() {
+            if (timerPollingDemandes) clearInterval(timerPollingDemandes);
+            if (timerChatChauffeur) clearInterval(timerChatChauffeur);
+            timerPollingDemandes = null;
+            timerChatChauffeur = null;
+            demandeChatChauffeurActive = '';
+            idsDemandesConnues = null;
+            document.getElementById('driverChatPanel').hidden = true;
+        }
+
+        async function chargerDemandes(options) {
+            options = options || {};
+            const container = document.getElementById('listeDemandes');
+            const driver = obtenirChauffeurConnecte();
+            if (!driver) {
+                container.replaceChildren();
+                const p = document.createElement('p');
+                p.className = 'chat-empty';
+                p.textContent = 'Connectez-vous dans l’onglet Profil pour consulter et accepter les demandes.';
+                container.appendChild(p);
+                return;
+            }
+            if (!driver.sessionToken) {
+                container.textContent = 'Votre ancienne session doit être renouvelée. Déconnectez-vous puis reconnectez-vous dans l’onglet Profil.';
+                updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', 'Reconnectez-vous pour activer les demandes et le chat.');
+                return;
+            }
+            if (!options.silencieux && !container.children.length) container.textContent = 'Chargement des demandes…';
+            try {
+                const result = await lireDepuisServeur({ action: 'listRequests', username: driver.username, sessionToken: driver.sessionToken });
+                if (!result.success || !Array.isArray(result.requests)) {
+                    if (result.message && result.message.toLocaleLowerCase('fr').includes('session')) {
+                        updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', result.message);
+                        container.textContent = result.message;
                         return;
                     }
-
-                    data.forEach(c => {
-                        const card = document.createElement('div');
-                        const isDispo = (c.statut || '').toLowerCase() === 'disponible';
-                        
-                        card.className = `chauffeur-card ${isDispo ? 'card-disponible' : 'card-indisponible'}`;
-                        
-                        const cleanPhone = (c.phone || '').replace(/[^0-9+]/g, '');
-                        const waPhone = cleanPhone.replace(/^\+/, '');
-                        const photoUrl = c.photo || "https://via.placeholder.com/100?text=Moto";
-                        const stationTxt = c.station || "Station non précisée";
-
-                        card.innerHTML = `
-                            <div class="chauffeur-header">
-                                <div class="avatar-wrapper">
-                                    <img src="${photoUrl}" class="avatar-img" alt="${c.nom}">
-                                    <span class="status-dot ${isDispo ? 'dot-green' : 'dot-red'}" title="${isDispo ? 'Disponible' : 'Indisponible'}"></span>
-                                </div>
-                                <div class="chauffeur-info">
-                                    <div class="chauffeur-info-top">
-                                        <h3>${c.nom}</h3>
-                                        <span class="status-pill ${isDispo ? 'pill-green' : 'pill-red'}">
-                                            ${isDispo ? '🟢 En service' : '🔴 Hors service'}
-                                        </span>
-                                    </div>
-                                    <p class="station-badge">📍 ${stationTxt}</p>
-                                    <p>🏍️ ${c.marque} (${c.couleur})</p>
-                                    <p>🏷️ Plaque: ${c.plaque || 'En attente'}</p>
-                                </div>
-                            </div>
-                            <div class="contact-grid">
-                                <a href="tel:${cleanPhone}" class="btn-action btn-call" title="Appeler direct">
-                                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                                </a>
-                                <a href="https://wa.me/${waPhone}?text=Bonjour%20je%20souhaite%20une%20course%20moto" target="_blank" class="btn-action btn-wa" title="WhatsApp">
-                                    <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.17 1.77 2.7 4.29 3.78.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
-                                </a>
-                                <a href="sms:${cleanPhone}?body=Bonjour%20j'ai%20besoin%20d'une%20course%20moto" class="btn-action btn-sms" title="Envoyer un SMS">
-                                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-                                </a>
-                                <a href="tel:${cleanPhone}" class="btn-action btn-bip" title="Faire sonner 1 coup (Bip)">
-                                    <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-                                </a>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    container.innerHTML = "<p style='text-align:center; color:red; font-size: 15px;'>Erreur de connexion au serveur.</p>";
-                    console.error(err);
-                });
-        }
-
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const msg = document.getElementById('regMessage');
-            msg.style.color = '#333';
-            msg.innerText = "Création du compte...";
-
-            const payload = {
-                action: "register",
-                nom: document.getElementById('nom').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                adresse: document.getElementById('adresse').value,
-                station: document.getElementById('station').value,
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value,
-                marqueMoto: document.getElementById('marqueMoto').value,
-                couleurMoto: document.getElementById('couleurMoto').value,
-                plaque: document.getElementById('plaque').value,
-                nifCin: document.getElementById('nifCin').value
-            };
-
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    msg.style.color = "green";
-                    msg.innerText = "Compte créé ! Connexion en cours...";
-                    document.getElementById('registrationForm').reset();
-                    setTimeout(() => navigateTo('/login'), 1500);
+                    throw new Error(result.message || 'Réponse de demandes invalide.');
+                }
+                const requests = result.requests;
+                const pendingIds = requests.filter(r => String(r.statut).toLocaleLowerCase('fr') === 'en attente').map(r => r.id);
+                if (idsDemandesConnues === null) {
+                    idsDemandesConnues = new Set(pendingIds);
                 } else {
-                    msg.style.color = "red";
-                    msg.innerText = res.message || "Erreur lors de l'enregistrement.";
-                }
-            })
-            .catch(() => {
-                msg.style.color = "red";
-                msg.innerText = "Erreur de connexion au serveur.";
-            });
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const msg = document.getElementById('loginMessage');
-            msg.style.color = '#333';
-            msg.innerText = "Connexion en cours...";
-
-            const payload = {
-                action: "login",
-                username: document.getElementById('loginUsername').value,
-                password: document.getElementById('loginPassword').value
-            };
-
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    msg.innerText = "";
-                    localStorage.setItem('moto_user', JSON.stringify(res.driver));
-                    afficherProfil(res.driver);
-                    updateAuthButtonUI(true);
-                } else {
-                    msg.style.color = "red";
-                    msg.innerText = res.message || "Identifiants invalides.";
-                }
-            })
-            .catch(() => {
-                msg.style.color = "red";
-                msg.innerText = "Erreur de communication.";
-            });
-        });
-
-        function afficherProfil(driver) {
-            document.getElementById('view-login').style.display = 'none';
-            document.getElementById('view-profil').style.display = 'block';
-
-            document.getElementById('profNom').value = driver.nom || '';
-            document.getElementById('profPhone').value = driver.phone || '';
-            document.getElementById('profEmail').value = driver.email || '';
-            document.getElementById('profAdresse').value = driver.adresse || '';
-            document.getElementById('profStation').value = driver.station || '';
-            document.getElementById('profMotoMarque').value = driver.marque || '';
-            document.getElementById('profMotoCouleur').value = driver.couleur || '';
-            document.getElementById('profPlaque').value = driver.plaque || '';
-            document.getElementById('profNifCin').value = driver.nifCin || '';
-            document.getElementById('selectStatut').value = driver.statut || "Indisponible";
-            document.getElementById('profPhotoDisplay').src = driver.photo || "https://via.placeholder.com/100?text=Photo";
-        }
-
-        function handlePhotoChange(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_SIZE = 140;
-                    let w = img.width, h = img.height;
-                    if (w > h) { if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; } }
-                    else { if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; } }
-                    canvas.width = w; canvas.height = h;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, w, h);
-                    base64PhotoEnAttente = canvas.toDataURL('image/jpeg', 0.65);
-                    document.getElementById('profPhotoDisplay').src = base64PhotoEnAttente;
-                };
-                img.src = evt.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const driver = JSON.parse(localStorage.getItem('moto_user'));
-            if (!driver) return;
-            const msg = document.getElementById('profileUpdateMsg');
-            msg.style.color = '#333';
-            msg.innerText = "Enregistrement en cours...";
-
-            const payload = {
-                action: "updateProfile",
-                username: driver.username,
-                nom: document.getElementById('profNom').value,
-                phone: document.getElementById('profPhone').value,
-                email: document.getElementById('profEmail').value,
-                adresse: document.getElementById('profAdresse').value,
-                station: document.getElementById('profStation').value,
-                marqueMoto: document.getElementById('profMotoMarque').value,
-                couleurMoto: document.getElementById('profMotoCouleur').value,
-                plaque: document.getElementById('profPlaque').value,
-                nifCin: document.getElementById('profNifCin').value,
-                photo: base64PhotoEnAttente || driver.photo || ""
-            };
-
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    msg.style.color = "green";
-                    msg.innerText = "Profil mis à jour avec succès !";
-                    Object.assign(driver, {
-                        nom: payload.nom, phone: payload.phone, email: payload.email,
-                        adresse: payload.adresse, station: payload.station,
-                        marque: payload.marqueMoto, couleur: payload.couleurMoto,
-                        plaque: payload.plaque, nifCin: payload.nifCin
-                    });
-                    if (base64PhotoEnAttente) driver.photo = base64PhotoEnAttente;
-                    localStorage.setItem('moto_user', JSON.stringify(driver));
-                } else {
-                    msg.style.color = "red";
-                    msg.innerText = res.message || "Erreur lors de la mise à jour.";
-                }
-            })
-            .catch(() => { msg.style.color = "red"; msg.innerText = "Erreur de connexion."; });
-        });
-
-        function changerStatut() {
-            const driver = JSON.parse(localStorage.getItem('moto_user'));
-            if (!driver) return;
-            const newStatut = document.getElementById('selectStatut').value;
-            const msg = document.getElementById('statusMsg');
-            msg.style.color = '#555'; msg.innerText = "Mise à jour...";
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify({ action: "updateStatus", username: driver.username, statut: newStatut })
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    driver.statut = newStatut;
-                    localStorage.setItem('moto_user', JSON.stringify(driver));
-                    msg.style.color = "green"; msg.innerText = "Statut mis à jour : " + newStatut;
-                } else {
-                    msg.style.color = "red"; msg.innerText = "Échec du changement.";
-                }
-            })
-            .catch(() => { msg.style.color = "red"; msg.innerText = "Erreur réseau."; });
-        }
-
-        function deconnexion() {
-            localStorage.removeItem('moto_user');
-            base64PhotoEnAttente = "";
-            document.getElementById('view-login').style.display = 'block';
-            document.getElementById('view-profil').style.display = 'none';
-            document.getElementById('loginForm').reset();
-            document.getElementById('loginMessage').innerText = "";
-            updateAuthButtonUI(false);
-            navigateTo('/accueil');
-        }
-
-        window.addEventListener('load', () => {
-            const savedDriver = localStorage.getItem('moto_user');
-            updateAuthButtonUI(!!savedDriver);
-            if (savedDriver) afficherProfil(JSON.parse(savedDriver));
-
-            const pathname = window.location.pathname;
-            let currentRoute = "/";
-            for (let route in routes) {
-                if (route !== "/" && pathname.includes(route)) {
-                    currentRoute = route;
-                    break;
-                }
-            }
-            navigateTo(currentRoute, false);
-        });
-    </script>
-
-    <!-- Script PWA optimisé pour corriger le comportement du bouton d'installation -->
-    <script>
-        (() => {
-            const wrap = document.getElementById("pwaInstallWrap");
-            const btn = document.getElementById("pwaInstallBtn");
-            let deferredPrompt = null;
-
-            function isStandalone() {
-                return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
-            }
-
-            window.addEventListener("beforeinstallprompt", (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                if (!isStandalone() && wrap) {
-                    wrap.style.display = "block";
-                }
-            });
-
-            if (btn) {
-                btn.addEventListener("click", async () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        const choiceResult = await deferredPrompt.userChoice;
-                        if (choiceResult.outcome === "accepted") {
-                            wrap.style.display = "none";
+                    const current = new Set(pendingIds);
+                    for (const request of requests) {
+                        if (String(request.statut).toLocaleLowerCase('fr') === 'en attente' && !idsDemandesConnues.has(request.id)) {
+                            alerterNouvelleDemande(request);
                         }
-                        deferredPrompt = null;
-                    } else {
-                        alert("Pour installer BTAXI, ouvrez le menu ⋮ de votre navigateur et sélectionnez « Ajouter à l'écran d'accueil » ou « Installer l'application ».");
                     }
-                });
+                    idsDemandesConnues = current;
+                }
+                afficherListeDemandes(requests, driver);
+                if (demandeChatChauffeurActive) await chargerMessagesChauffeur(demandeChatChauffeurActive);
+            } catch (error) {
+                if (!options.silencieux) {
+                    container.textContent = 'Impossible de charger les demandes. Vérifiez votre connexion.';
+                }
+                console.error('Chargement des demandes impossible :', error);
             }
+        }
 
-            window.addEventListener("appinstalled", () => {
-                if (wrap) wrap.style.display = "none";
-                deferredPrompt = null;
+        function afficherListeDemandes(requests, driver) {
+            const container = document.getElementById('listeDemandes');
+            container.replaceChildren();
+            if (!requests.length) {
+                const empty = document.createElement('p');
+                empty.className = 'chat-empty';
+                empty.textContent = 'Aucune demande disponible pour le moment. Les nouvelles demandes apparaîtront ici automatiquement.';
+                container.appendChild(empty);
+                return;
+            }
+            requests.forEach(function(request) {
+                const card = document.createElement('article');
+                card.className = 'driver-request-card';
+                const status = document.createElement('span');
+                status.className = 'request-state' + (request.statut === 'Acceptée' ? ' accepted' : '');
+                status.textContent = request.statut === 'Acceptée' ? '✅ Course acceptée par vous' : '🟡 Demande disponible';
+                const title = document.createElement('h3');
+                title.textContent = 'Course ' + String(request.id || '').slice(0, 8);
+                const from = document.createElement('p');
+                from.textContent = '📍 Départ : ' + (request.depart || 'Non précisé');
+                const to = document.createElement('p');
+                to.textContent = '🏁 Destination : ' + (request.destination || 'Non précisée');
+                const date = document.createElement('p');
+                date.textContent = '🕒 Demande : ' + formatDateBtaxi(request.dateCreation);
+                card.append(status, title, from, to, date);
+                if (request.statut === 'Acceptée' && String(request.acceptedBy).toLocaleLowerCase('fr') === String(driver.username).toLocaleLowerCase('fr')) {
+                    const chatButton = document.createElement('button');
+                    chatButton.type = 'button';
+                    chatButton.className = 'btn-open-chat';
+                    chatButton.textContent = '💬 Ouvrir le chat client';
+                    chatButton.addEventListener('click', function() { ouvrirChatChauffeur(request); });
+                    card.appendChild(chatButton);
+                } else if (request.statut === 'En attente') {
+                    const acceptButton = document.createElement('button');
+                    acceptButton.type = 'button';
+                    acceptButton.className = 'btn-accept-request';
+                    acceptButton.textContent = '✓ Accepter et ouvrir le chat';
+                    acceptButton.addEventListener('click', function() { accepterDemande(request, acceptButton); });
+                    card.appendChild(acceptButton);
+                }
+                container.appendChild(card);
             });
+        }
+
+        async function accepterDemande(request, button) {
+            const driver = obtenirChauffeurConnecte();
+            if (!driver) { updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', 'Connectez-vous avant d’accepter une course.'); return; }
+            button.disabled = true;
+            button.textContent = 'Acceptation…';
+            try {
+                const result = await envoyerAuServeur({ action: 'acceptRequest', requestId: request.id, username: driver.username, sessionToken: driver.sessionToken });
+                if (!result.success || !result.request) throw new Error(result.message || 'Cette course ne peut pas être acceptée.');
+                updateMessage(document.getElementById('driverAlertStatus'), '#047857', 'Course acceptée. Le chat avec le client est ouvert.');
+                await chargerDemandes({ silencieux: true });
+                ouvrirChatChauffeur(result.request);
+            } catch (error) {
+                updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', error.message || 'Erreur lors de l’acceptation.');
+                button.disabled = false;
+                button.textContent = '✓ Accepter et ouvrir le chat';
+            }
+        }
+
+        function ouvrirChatChauffeur(request) {
+            const panel = document.getElementById('driverChatPanel');
+            demandeChatChauffeurActive = request.id;
+            panel.hidden = false;
+            document.getElementById('driverChatTitle').textContent = 'Chat avec le client';
+            document.getElementById('driverChatSummary').textContent = 'Départ : ' + request.depart + ' — Destination : ' + request.destination;
+            navigateTo('/demandes');
+            chargerMessagesChauffeur(request.id);
+            if (timerChatChauffeur) clearInterval(timerChatChauffeur);
+            timerChatChauffeur = setInterval(function() { if (demandeChatChauffeurActive) chargerMessagesChauffeur(demandeChatChauffeurActive); }, 5000);
+            setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        }
+
+        async function chargerMessagesChauffeur(requestId) {
+            const driver = obtenirChauffeurConnecte();
+            if (!driver || !requestId) return;
+            try {
+                const result = await lireDepuisServeur({ action: 'getMessages', requestId: requestId, username: driver.username, sessionToken: driver.sessionToken });
+                if (result.success && Array.isArray(result.messages)) afficherMessagesDans('driverChatLog', result.messages, 'driver');
+                else if (!result.success) updateMessage(document.getElementById('driverChatMessage'), '#b91c1c', result.message || 'Chat indisponible.');
+            } catch (error) { console.warn('Chargement du chat chauffeur impossible :', error); }
+        }
+
+        document.getElementById('driverChatForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const driver = obtenirChauffeurConnecte();
+            const input = document.getElementById('driverChatInput');
+            const button = document.getElementById('driverChatSend');
+            const message = input.value.trim();
+            if (!driver || !demandeChatChauffeurActive || !message || button.disabled) return;
+            button.disabled = true;
+            try {
+                const result = await envoyerAuServeur({ action: 'sendMessage', senderType: 'driver', requestId: demandeChatChauffeurActive, username: driver.username, sessionToken: driver.sessionToken, message: message });
+                if (!result.success) throw new Error(result.message || 'Message non envoyé.');
+                input.value = '';
+                updateMessage(document.getElementById('driverChatMessage'), '#047857', 'Message envoyé.');
+                await chargerMessagesChauffeur(demandeChatChauffeurActive);
+            } catch (error) {
+                updateMessage(document.getElementById('driverChatMessage'), '#b91c1c', error.message || 'Erreur pendant l’envoi du message.');
+            } finally { button.disabled = false; }
+        });
+
+        document.getElementById('btnCloseDriverChat').addEventListener('click', function() {
+            document.getElementById('driverChatPanel').hidden = true;
+            demandeChatChauffeurActive = '';
+            if (timerChatChauffeur) clearInterval(timerChatChauffeur);
+            timerChatChauffeur = null;
+        });
+
+        function afficherMessagesDans(containerId, messages, role) {
+            const container = document.getElementById(containerId);
+            const wasNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 60;
+            container.replaceChildren();
+            if (!messages.length) {
+                const empty = document.createElement('p');
+                empty.className = 'chat-empty';
+                empty.textContent = 'Aucun message pour le moment. Écrivez au client ou au chauffeur pour commencer.';
+                container.appendChild(empty);
+                return;
+            }
+            messages.forEach(function(item) {
+                const bubble = document.createElement('div');
+                bubble.className = 'chat-message' + (item.senderType === role ? ' mine' : '');
+                const author = document.createElement('strong');
+                author.textContent = item.senderType === role ? 'Vous' : (item.senderName || (item.senderType === 'driver' ? 'Chauffeur' : 'Client'));
+                const body = document.createElement('p');
+                body.textContent = item.message || '';
+                const time = document.createElement('time');
+                time.textContent = formatDateBtaxi(item.date);
+                bubble.append(author, body, time);
+                container.appendChild(bubble);
+            });
+            if (wasNearBottom) container.scrollTop = container.scrollHeight;
+        }
+
+        function formatDateBtaxi(value) {
+            if (!value) return 'date inconnue';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return String(value);
+            return date.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        }
+
+        document.getElementById('btnEnableAlerts').addEventListener('click', async function() {
+            const status = document.getElementById('driverAlertStatus');
+            try {
+                if (!window.isSecureContext && location.hostname !== 'localhost') {
+                    updateMessage(status, '#b91c1c', 'Les notifications nécessitent HTTPS. Ouvrez BTAXI avec son adresse https://.');
+                    return;
+                }
+                if ('Notification' in window && Notification.permission === 'default') {
+                    await Notification.requestPermission();
+                }
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    if (!contexteAudioBtaxi) contexteAudioBtaxi = new AudioContextClass();
+                    if (contexteAudioBtaxi.state === 'suspended') await contexteAudioBtaxi.resume();
+                    jouerAlerteSonore(true);
+                }
+                try { localStorage.setItem('btaxi_alertes_active', '1'); } catch (error) {}
+                if (!('Notification' in window)) {
+                    updateMessage(status, '#92400e', 'La sonnerie est activée, mais les notifications ne sont pas disponibles dans ce navigateur. Gardez BTAXI ouvert.');
+                } else if (Notification.permission === 'granted') {
+                    updateMessage(status, '#047857', '✅ Notifications et sonnerie activées. Gardez BTAXI ouvert pour les alertes en direct.');
+                } else {
+                    updateMessage(status, '#92400e', 'Sonnerie activée. Autorisez les notifications BTAXI dans les paramètres du navigateur pour voir les alertes visuelles.');
+                }
+                demarrerPollingDemandes();
+            } catch (error) {
+                updateMessage(status, '#b91c1c', 'Impossible d’activer les alertes : ' + (error.message || 'permission refusée.'));
+            }
+        });
+
+        function alerterNouvelleDemande(request) {
+            const driver = obtenirChauffeurConnecte();
+            if (!driver || String(driver.statut || '').toLocaleLowerCase('fr') !== 'disponible') return;
+            if (localStorage.getItem('btaxi_alertes_active') !== '1') return;
+            jouerAlerteSonore(false);
+            if ('Notification' in window && Notification.permission === 'granted') {
+                try {
+                    const notification = new Notification('BTAXI — Nouvelle demande de course', {
+                        body: 'Départ : ' + request.depart + '\nDestination : ' + request.destination,
+                        tag: 'btaxi-demande-' + request.id,
+                        requireInteraction: true
+                    });
+                    notification.onclick = function() {
+                        window.focus();
+                        navigateTo('/demandes');
+                        notification.close();
+                    };
+                } catch (error) { console.warn('Notification impossible :', error); }
+            }
+            updateMessage(document.getElementById('driverAlertStatus'), '#047857', '🔔 Nouvelle demande reçue. Consultez la liste et acceptez la course si elle vous convient.');
+        }
+
+        function jouerAlerteSonore(fromUserGesture) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+            try {
+                if (!contexteAudioBtaxi) contexteAudioBtaxi = new AudioContextClass();
+                if (contexteAudioBtaxi.state === 'suspended') contexteAudioBtaxi.resume().catch(function() {});
+                const ctx = contexteAudioBtaxi;
+                const oscillator = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const now = ctx.currentTime;
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(fromUserGesture ? 660 : 880, now);
+                oscillator.frequency.setValueAtTime(660, now + 0.18);
+                oscillator.frequency.setValueAtTime(880, now + 0.36);
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.18, now + 0.025);
+                gain.gain.setValueAtTime(0.18, now + 0.48);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.68);
+                oscillator.connect(gain);
+                gain.connect(ctx.destination);
+                oscillator.start(now);
+                oscillator.stop(now + 0.7);
+            } catch (error) { console.warn('Sonnerie BTAXI indisponible :', error); }
+        }
+    </script>
+    <script>
+        (()=>{
+            const wrap=document.getElementById('pwaInstallWrap');const button=document.getElementById('pwaInstallBtn');let deferredPrompt=null;
+            const standalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+            window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredPrompt=event;if(!standalone()&&wrap)wrap.style.display='block';});
+            button?.addEventListener('click',async()=>{
+                if(deferredPrompt){try{deferredPrompt.prompt();const result=await deferredPrompt.userChoice;if(result.outcome==='accepted')wrap.style.display='none';}finally{deferredPrompt=null;}}
+                else alert("Pour installer BTAXI, ouvrez le menu de votre navigateur et sélectionnez « Ajouter à l'écran d'accueil » ou « Installer l'application ».");
+            });
+            window.addEventListener('appinstalled',()=>{if(wrap)wrap.style.display='none';deferredPrompt=null;});
         })();
     </script>
 </body>
