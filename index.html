@@ -219,7 +219,8 @@
         .request-panel-heading strong { display: block; color: #0f172a; font-size: 15px; }
         .request-panel-heading p, .chat-panel-header p { color: #64748b; font-size: 13px; margin: 5px 0 0; line-height: 1.45; }
         .btn-small-neutral { border: 1px solid #cbd5e1; color: #334155; background: #f8fafc; border-radius: 9px; padding: 8px 10px; cursor: pointer; font-weight: 700; font-size: 12px; flex-shrink: 0; }
-        .hero-banner .alert-description, .hero-banner .chat-empty { color: #64748b; }
+        .request-panel-actions { display: flex; align-items: center; justify-content: flex-end; gap: 7px; flex-wrap: wrap; }
+        .hero-banner .request-chat-panel .alert-description, .hero-banner .request-chat-panel .chat-empty { color: #64748b; }
         .chat-log { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; padding: 12px 2px; margin: 10px 0; }
         .chat-empty { color: #64748b; text-align: center; font-size: 13px; padding: 12px 4px; }
         .chat-message { max-width: 88%; padding: 9px 11px; border-radius: 12px; background: #f1f5f9; color: #0f172a; align-self: flex-start; overflow-wrap: anywhere; }
@@ -239,6 +240,8 @@
         .btn-accept-request, .btn-open-chat { width: 100%; border: 0; border-radius: 10px; min-height: 43px; color: #fff; background: #059669; font-weight: 800; font-size: 14px; margin-top: 8px; cursor: pointer; }
         .btn-accept-request:disabled { opacity: .6; cursor: wait; }
         .btn-open-chat { background: var(--primary); }
+        .btn-delete-request { width: 100%; border: 1px solid #fecaca; border-radius: 10px; min-height: 40px; color: #b91c1c; background: #fff1f2; font-weight: 800; font-size: 13px; margin-top: 8px; cursor: pointer; }
+        .btn-delete-request:disabled { opacity: .6; cursor: wait; }
         .demand-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0 16px; }
         .demand-toolbar .btn-refresh { margin: 0; height: 100%; }
         .alert-enable-btn { background: #0f172a; color: #fff; border: none; border-radius: 12px; padding: 12px; cursor: pointer; font-weight: 700; font-size: 13px; }
@@ -246,6 +249,7 @@
         @media (max-width: 420px) {
             .demand-toolbar { grid-template-columns: 1fr; }
             .request-panel-heading, .chat-panel-header { flex-direction: column; }
+            .request-panel-actions { justify-content: flex-start; width: 100%; }
             .chat-form { flex-direction: column; }
             .chat-form button { min-height: 42px; }
             .tab-btn { min-width: 0; font-size: 10px; }
@@ -253,28 +257,563 @@
 
         @media (max-width: 420px) { .tab-btn { font-size: 11px; } .chauffeur-info-top { align-items: flex-start; flex-direction: column; gap: 6px; } .chauffeur-header { gap: 10px; } .chauffeur-card { padding: 12px; } .request-form { flex-direction: column; } .request-input, .request-btn { width: 100%; } }
         @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+
+
+        /* ==========================================================
+           BTAXI — couche de design responsive (présentation uniquement)
+           Les identifiants, formulaires et fonctions JavaScript restent inchangés.
+           ========================================================== */
+        :root {
+            color-scheme: light;
+            --primary: #245DDA;
+            --primary-hover: #1746A2;
+            --primary-light: #EAF1FF;
+            --bg-color: #F4F7FB;
+            --card-bg: #FFFFFF;
+            --text-main: #14213D;
+            --text-muted: #64748B;
+            --border-color: #E4EAF2;
+            --dark-nav: #FFFFFF;
+            --status-green: #0DAD78;
+            --status-green-bg: #DDF8ED;
+            --status-red: #E5484D;
+            --status-red-bg: #FDE8E8;
+            --shadow-sm: 0 5px 18px rgba(26, 47, 83, .07);
+            --shadow-md: 0 14px 36px rgba(26, 47, 83, .12);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+        html {
+            min-height: 100%;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            background: var(--bg-color);
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-main);
+            background: var(--bg-color);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.5;
+            padding: 0 0 calc(112px + env(safe-area-inset-bottom));
+            -webkit-tap-highlight-color: transparent;
+        }
+        button, input, select, textarea { font: inherit; }
+        button, a, input, select { touch-action: manipulation; }
+        button { -webkit-appearance: none; appearance: none; }
+        img { max-width: 100%; }
+
+        /* En-tête d'application et vrai logo */
+        header.app-header {
+            width: 100%;
+            max-width: 760px;
+            min-height: 76px;
+            margin: 0 auto;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            color: #FFFFFF;
+            background: rgba(16, 32, 62, .97);
+            border: 0;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 5px 22px rgba(13, 30, 60, .12);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+        }
+        header.app-header::before,
+        header.app-header::after { content: none !important; display: none !important; }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+            flex: 1;
+            margin: 0;
+        }
+        .header-logo {
+            display: block;
+            flex: 0 0 46px;
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            border-radius: 13px;
+            padding: 3px;
+            background: #FFFFFF;
+            box-shadow: 0 3px 10px rgba(0,0,0,.16);
+        }
+        .header-brand-copy { min-width: 0; display: flex; flex-direction: column; gap: 0; }
+        header.app-header .header-brand-copy h1 {
+            margin: 0;
+            color: #FFFFFF;
+            font-size: 20px;
+            line-height: 1.15;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+        }
+        .header-brand-copy span {
+            margin-top: 3px;
+            font-size: 11px;
+            line-height: 1.25;
+            color: #CAD6EA;
+            font-weight: 500;
+            letter-spacing: .1px;
+        }
+        .header-location {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            max-width: 46%;
+            padding: 8px 10px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 999px;
+            color: #F5F8FF;
+            background: rgba(255,255,255,.08);
+            font-size: 11px;
+            line-height: 1.2;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .container {
+            width: 100%;
+            max-width: 760px;
+            min-height: calc(100vh - 76px);
+            margin: 0 auto;
+            padding: 0 0 12px;
+            background: transparent;
+        }
+        .tab-content { padding: 20px 16px; }
+        #tab-accueil.tab-content { padding: 0 0 16px; }
+        h2, h3 { color: var(--text-main); letter-spacing: -.35px; }
+        h2 { font-size: clamp(20px, 4vw, 24px); line-height: 1.25; font-weight: 850; }
+        h3 { line-height: 1.3; }
+
+        /* Barre de navigation façon application native */
+        .tab-bar {
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: calc(10px + env(safe-area-inset-bottom));
+            transform: translateX(-50%);
+            width: min(760px, calc(100% - 20px));
+            max-width: 760px;
+            display: flex;
+            align-items: stretch;
+            justify-content: space-around;
+            gap: 2px;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+            border: 1px solid rgba(226,232,240,.95);
+            border-radius: 22px;
+            background: rgba(255,255,255,.96);
+            box-shadow: 0 12px 36px rgba(20, 39, 72, .18);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+        }
+        .tab-btn {
+            flex: 1 1 0;
+            min-width: 0;
+            min-height: 52px;
+            padding: 4px 2px 3px;
+            gap: 4px;
+            border-radius: 14px;
+            color: #77839A;
+            font-size: 10px;
+            line-height: 1.1;
+            font-weight: 750;
+            letter-spacing: -.1px;
+            text-decoration: none;
+            transition: color .18s ease, background .18s ease, transform .18s ease;
+        }
+        .tab-btn span.icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 27px;
+            border-radius: 10px;
+            font-size: 19px;
+            line-height: 1;
+            transition: background .18s ease;
+        }
+        .tab-btn.active {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .tab-btn.active span.icon { background: rgba(36,93,218,.09); }
+        .tab-btn:active { transform: scale(.97); }
+
+        /* Accueil et formulaire de demande */
+        .hero-banner {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            margin: 0 0 22px;
+            padding: 32px 18px 24px;
+            text-align: left;
+            color: #FFFFFF;
+            background: linear-gradient(140deg, #163B83 0%, #245DDA 56%, #397FF1 100%);
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 12px 26px rgba(36,93,218,.18);
+        }
+        .hero-banner::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 230px;
+            height: 230px;
+            top: -115px;
+            right: -72px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 50%;
+            box-shadow: 0 0 0 28px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025);
+            pointer-events: none;
+        }
+        .hero-banner h1 {
+            position: relative;
+            margin: 0 0 8px;
+            color: #FFFFFF;
+            font-size: clamp(25px, 6vw, 32px);
+            font-weight: 900;
+            line-height: 1.12;
+            letter-spacing: -.6px;
+            text-transform: uppercase;
+        }
+        .hero-banner > p:not(.message) {
+            position: relative;
+            margin: 0 0 20px;
+            max-width: 440px;
+            color: #EAF1FF;
+            font-size: 14px;
+            line-height: 1.55;
+            opacity: 1;
+        }
+        .request-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            align-items: stretch;
+            gap: 10px;
+            position: relative;
+        }
+        .request-input {
+            width: 100%;
+            min-width: 0;
+            min-height: 49px;
+            padding: 12px 13px;
+            border: 1px solid rgba(255,255,255,.6);
+            border-radius: 13px;
+            outline: none;
+            text-align: left;
+            font-size: 14px;
+            color: #17233B;
+            background: #FFFFFF;
+            box-shadow: 0 4px 10px rgba(12,35,80,.08);
+        }
+        .request-input::placeholder { color: #8994A7; opacity: 1; }
+        .request-input:focus { border-color: #F7C948; box-shadow: 0 0 0 3px rgba(247,201,72,.25); }
+        .request-btn {
+            grid-column: 1 / -1;
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 13px;
+            color: #192744;
+            background: linear-gradient(135deg, #FFD65A, #FFBE24);
+            box-shadow: 0 6px 16px rgba(12,35,80,.2);
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .15s ease, filter .15s ease;
+        }
+        .request-btn:hover { filter: brightness(1.03); }
+        .request-btn:active { transform: scale(.985); }
+        .request-btn:disabled { opacity: .65; cursor: wait; }
+        .hero-banner .message { color: #FFFFFF; font-size: 13px; }
+        #tab-accueil > h2 { padding: 0 18px !important; margin: 0 0 14px !important; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            padding: 0 16px;
+            margin: 0 0 16px;
+        }
+        .feature-item {
+            min-width: 0;
+            min-height: 155px;
+            padding: 18px 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            background: #FFFFFF;
+            box-shadow: var(--shadow-sm);
+            justify-content: flex-start;
+            text-align: left;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            margin: 0 0 12px;
+            border-radius: 14px;
+            background: var(--primary-light);
+            font-size: 22px;
+        }
+        .feature-text h4 { margin: 0 0 7px; font-size: 14px; line-height: 1.3; color: #17233B; }
+        .feature-text p { margin: 0; font-size: 12px; line-height: 1.5; color: #718096; }
+
+        /* Formulaires et champs */
+        .form-container, .profile-container {
+            margin: 0 0 18px;
+            padding: clamp(18px, 4vw, 26px);
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            background: #FFFFFF;
+            box-shadow: var(--shadow-sm);
+        }
+        .form-container h2, .profile-container h2 { margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        label { margin-bottom: 7px; color: #34425B; font-size: 13px; font-weight: 750; }
+        input, select, textarea {
+            max-width: 100%;
+            min-height: 46px;
+            padding: 12px 13px;
+            border: 1px solid #DCE4EF;
+            border-radius: 12px;
+            color: #17233B;
+            background: #F9FBFE;
+            font-size: 15px;
+            box-shadow: none;
+            transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+        }
+        input::placeholder, textarea::placeholder { color: #98A3B5; opacity: 1; }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #6E99F3;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(36,93,218,.11);
+        }
+        .btn-submit {
+            min-height: 49px;
+            padding: 13px 18px;
+            border: 0;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #2C6AE9, #245DDA);
+            color: #FFFFFF;
+            box-shadow: 0 7px 16px rgba(36,93,218,.2);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: .1px;
+        }
+        .btn-submit:hover { background: var(--primary-hover); }
+        .btn-submit:disabled { opacity: .6; box-shadow: none; }
+        .message { font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+        .btn-refresh {
+            min-height: 46px;
+            padding: 12px 15px;
+            border: 1px solid rgba(36,93,218,.08);
+            border-radius: 13px;
+            background: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 5px 12px rgba(36,93,218,.15);
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .btn-refresh:hover { background: var(--primary-hover); }
+
+        /* Chauffeurs, demandes, chat et profil */
+        #tab-chauffeurs > h2, #tab-demandes > h2 { margin: 0 0 8px; }
+        #tab-demandes > .alert-description { margin: 0 0 16px; }
+        .grid-chauffeurs { display: grid; grid-template-columns: minmax(0, 1fr); gap: 13px; }
+        .chauffeur-card, .driver-request-card, .request-chat-panel, .chat-panel {
+            min-width: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 19px;
+            background: #FFFFFF;
+            box-shadow: var(--shadow-sm);
+        }
+        .chauffeur-card { padding: 16px; }
+        .card-disponible { border-left: 4px solid var(--status-green); }
+        .card-indisponible { border-left: 4px solid #D6DCE6; opacity: .94; }
+        .chauffeur-header { gap: 13px; margin-bottom: 14px; }
+        .avatar-img { width: 60px; height: 60px; border: 3px solid #EDF3FF; box-shadow: 0 0 0 1px #D4E2FF; }
+        .status-dot { width: 13px; height: 13px; }
+        .chauffeur-info-top { align-items: flex-start; }
+        .chauffeur-info h3 { font-size: 16px; letter-spacing: -.25px; }
+        .chauffeur-info p { font-size: 13px; line-height: 1.5; }
+        .status-pill { padding: 5px 9px; font-size: 11px; }
+        .pill-green { color: #087A54; background: #DDF8ED; }
+        .pill-red { color: #B4232B; background: #FDE8E8; }
+        .station-badge { background: #FFF4D6; color: #76520B !important; font-size: 12px; border-radius: 7px; padding: 4px 8px; }
+        .contact-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 14px; }
+        .btn-action { min-height: 44px; border-radius: 12px; box-shadow: none; }
+        .btn-call { background: #0CA678; }
+        .btn-wa { background: #20BA69; }
+        .btn-sms { background: #3978E8; }
+        .btn-bip { background: #E99418; }
+        .request-chat-panel, .chat-panel { margin-top: 16px; padding: 15px; background: #FFFFFF; color: var(--text-main); border-radius: 18px; }
+        .request-panel-heading, .chat-panel-header { gap: 12px; }
+        .request-panel-heading strong { color: #17233B; font-size: 15px; }
+        .request-panel-heading p, .chat-panel-header p { color: #77839A; font-size: 12px; }
+        .btn-small-neutral { min-height: 36px; border: 1px solid #DCE4EF; border-radius: 10px; padding: 8px 10px; background: #F7F9FC; color: #34425B; font-size: 12px; }
+        .chat-log { max-height: min(42vh, 380px); gap: 9px; padding: 12px 2px; overscroll-behavior: contain; }
+        .chat-message { max-width: 88%; padding: 10px 12px; border: 1px solid #E7ECF4; border-radius: 15px 15px 15px 5px; background: #F1F5FA; }
+        .chat-message.mine { border-color: #CFE0FF; border-radius: 15px 15px 5px 15px; background: #E7F0FF; }
+        .chat-message strong { color: #50617A; font-size: 11px; }
+        .chat-message p { font-size: 14px; line-height: 1.5; }
+        .chat-message time { font-size: 10px; }
+        .chat-form { gap: 8px; align-items: stretch; }
+        .chat-form input { min-width: 0; min-height: 46px; background: #F9FBFE; }
+        .chat-form button { min-height: 46px; border-radius: 12px; padding: 0 17px; background: var(--primary); font-size: 13px; font-weight: 800; }
+        .driver-request-card { padding: 16px; }
+        .driver-request-card h3 { font-size: 16px; }
+        .driver-request-card p { font-size: 13px; color: #5F6E84; line-height: 1.55; }
+        .request-state { padding: 5px 9px; font-size: 11px; letter-spacing: .1px; }
+        .btn-accept-request, .btn-open-chat, .btn-delete-request {
+            min-height: 45px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .btn-accept-request { background: #0B9A6B; }
+        .btn-accept-request:hover { background: #087B56; }
+        .btn-open-chat { background: var(--primary); }
+        .btn-delete-request { border-color: #F4C6C8; background: #FFF4F4; color: #BC2E36; }
+        .demand-toolbar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 9px; }
+        .alert-enable-btn { min-height: 46px; padding: 10px 12px; border-radius: 13px; background: #162746; font-size: 12px; line-height: 1.35; }
+        .alert-description { color: #77839A; font-size: 13px; line-height: 1.55; }
+        .profile-avatar { width: 104px; height: 104px; border: 4px solid #EAF1FF; box-shadow: 0 0 0 1px #CADBFF, var(--shadow-sm); }
+        .btn-logout { min-height: 48px; border-radius: 13px; box-shadow: none; font-weight: 800; }
+        hr { border-color: var(--border-color) !important; }
+        .pwa-install-btn {
+            min-height: 44px;
+            padding: 11px 17px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 999px;
+            background: #142849;
+            color: #FFFFFF;
+            box-shadow: 0 8px 22px rgba(17, 38, 76, .24);
+            font-size: 13px;
+        }
+        .pwa-install-wrap { bottom: calc(94px + env(safe-area-inset-bottom)); }
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 3px solid rgba(36,93,218,.38);
+            outline-offset: 2px;
+        }
+
+        @media (min-width: 600px) {
+            header.app-header { padding-right: 22px; padding-left: 22px; }
+            .hero-banner { padding: 38px 26px 28px; }
+            .tab-content { padding: 24px 20px; }
+            #tab-accueil.tab-content { padding: 0 0 20px; }
+            .features-grid { padding-right: 20px; padding-left: 20px; }
+            .chauffeur-card, .driver-request-card { padding: 19px; }
+        }
+        @media (max-width: 480px) {
+            body { font-size: 14px; padding-bottom: calc(106px + env(safe-area-inset-bottom)); }
+            header.app-header { min-height: 70px; padding: 10px 13px; }
+            .header-logo { flex-basis: 42px; width: 42px; height: 42px; border-radius: 12px; }
+            .header-brand { gap: 9px; }
+            header.app-header .header-brand-copy h1 { font-size: 18px; }
+            .header-brand-copy span { font-size: 10px; }
+            .header-location { max-width: 42%; padding: 7px 8px; font-size: 10px; }
+            .tab-content { padding: 17px 13px; }
+            #tab-accueil.tab-content { padding: 0 0 12px; }
+            .hero-banner { padding: 28px 15px 21px; border-radius: 0 0 22px 22px; }
+            .hero-banner h1 { font-size: 26px; }
+            .hero-banner > p:not(.message) { font-size: 13px; margin-bottom: 17px; }
+            .request-form { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+            .request-input { min-height: 47px; font-size: 14px; }
+            .request-btn { grid-column: auto; min-height: 48px; }
+            #tab-accueil > h2 { padding: 0 15px !important; font-size: 20px; }
+            .features-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 0 13px; }
+            .feature-item { min-height: 0; padding: 15px; display: grid; grid-template-columns: 42px minmax(0,1fr); column-gap: 12px; align-items: start; }
+            .feature-icon { grid-row: 1 / span 2; width: 42px; height: 42px; margin: 0; }
+            .feature-text h4 { margin-top: 1px; font-size: 13px; }
+            .feature-text p { font-size: 12px; }
+            .form-container, .profile-container { padding: 18px 15px; border-radius: 18px; }
+            h2 { font-size: 21px; }
+            .demand-toolbar { grid-template-columns: minmax(0,1fr); }
+            .request-panel-heading, .chat-panel-header { flex-direction: column; }
+            .request-panel-actions { justify-content: flex-start; width: 100%; }
+            .request-panel-actions button { flex: 1; }
+            .chat-form { flex-direction: row; }
+            .chat-form input { flex: 1; width: 0; }
+            .chat-form button { flex: 0 0 auto; min-height: 46px; }
+            .chauffeur-info-top { align-items: flex-start; flex-direction: column; gap: 6px; }
+            .chauffeur-header { gap: 10px; }
+            .chauffeur-card { padding: 13px; }
+            .tab-bar { width: calc(100% - 14px); bottom: calc(7px + env(safe-area-inset-bottom)); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); border-radius: 19px; }
+            .tab-btn { min-height: 49px; padding: 4px 0 2px; font-size: 9px; gap: 3px; }
+            .tab-btn span.icon { width: 27px; height: 25px; font-size: 18px; }
+            .pwa-install-wrap { bottom: calc(82px + env(safe-area-inset-bottom)); }
+            .pwa-install-btn { min-height: 40px; padding: 9px 13px; font-size: 12px; }
+        }
+        @media (max-width: 360px) {
+            .header-location { display: none; }
+            .tab-btn { font-size: 8.5px; }
+            .tab-btn span.icon { font-size: 17px; }
+            .contact-grid { gap: 6px; }
+            .btn-action svg { width: 18px; height: 18px; }
+            .request-panel-actions { flex-direction: column; align-items: stretch; }
+            .request-panel-actions button { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+        }
+
     </style>
 </head>
 <body>
     <div class="pwa-install-wrap" id="pwaInstallWrap">
         <button type="button" class="pwa-install-btn" id="pwaInstallBtn"><span>⬇️ Installer BTAXI</span></button>
     </div>
-    <header>
+    <header class="app-header">
         <div class="header-brand">
-            <svg class="header-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="32" height="32" rx="8" fill="#121212"/><path d="M6 20h3l1.5-4.5h9l1.5 4.5h3" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="21.5" r="3" fill="#FFB800"/><circle cx="22.5" cy="21.5" r="3" fill="#FFB800"/><path d="M16 6v8m-4-4l4-4 4 4" stroke="#FFB800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h1>Btaxi</h1>
+            <img class="header-logo" src="images/logo.png" alt="Logo BTAXI" width="44" height="44" decoding="async">
+            <div class="header-brand-copy">
+                <h1>BTAXI</h1>
+                <span>Votre moto-taxi à Jacmel</span>
+            </div>
         </div>
+        <span class="header-location" aria-label="Ville de Jacmel">
+            <span aria-hidden="true">📍</span> Jacmel, Haïti
+        </span>
     </header>
     <main class="container">
         <section id="tab-accueil" class="tab-content" aria-labelledby="home-title">
             <div class="hero-banner">
                 <h1 id="home-title">BENTOUL TAXI</h1>
-                <p>Retrouver un chauffeurs proche<br>de vous en toutes sécurité</p>
+                <p>Trouvez un chauffeur proche de vous, simplement et en toute sécurité.</p>
                 <form class="request-form" onsubmit="envoyerDemandeCourse(event)">
-                    <input type="text" id="reqAdresse" class="request-input" placeholder="Adresss actuel" required>
-                    <input type="text" id="reqDestination" class="request-input" placeholder="destination" required>
+                    <input type="text" id="reqAdresse" class="request-input" placeholder="Adresse de départ" required>
+                    <input type="text" id="reqDestination" class="request-input" list="jacmelZones" placeholder="Destination à Jacmel" autocomplete="off" required>
+                    <datalist id="jacmelZones">
+                        <option value="Ville de Jacmel — Centre-ville"></option>
+                        <option value="Quartier de Marbial"></option>
+                        <option value="Bas Cap Rouge"></option>
+                        <option value="Fond-Melon (Selle)"></option>
+                        <option value="Cochon-Gras"></option>
+                        <option value="La Gosseline"></option>
+                        <option value="Marbial"></option>
+                        <option value="Montagne-La-Voûte"></option>
+                        <option value="Grande-Rivière-de-Jacmel"></option>
+                        <option value="Bas Coq-Chante"></option>
+                        <option value="Haut Coq-Chante"></option>
+                        <option value="Lavanneau"></option>
+                        <option value="La Montagne"></option>
+                    </datalist>
                     <button type="submit" class="request-btn">Demande</button>
                 </form>
                 <p id="clientRequestFormMessage" class="message" role="status" aria-live="polite"></p>
@@ -284,9 +823,13 @@
                             <strong id="clientRequestStatus">Demande envoyée</strong>
                             <p id="clientRequestSummary"></p>
                         </div>
-                        <button type="button" id="btnNewRequest" class="btn-small-neutral">Nouvelle demande</button>
+                        <div class="request-panel-actions">
+                            <button type="button" id="btnEnableClientAlerts" class="btn-small-neutral">🔔 Activer les alertes</button>
+                            <button type="button" id="btnNewRequest" class="btn-small-neutral">Nouvelle demande</button>
+                        </div>
                     </div>
                     <p id="clientRequestHint" class="alert-description">Nous recherchons un chauffeur disponible.</p>
+                    <p id="clientAlertStatus" class="message" role="status" aria-live="polite"></p>
                     <div id="clientChatLog" class="chat-log" aria-live="polite"><p class="chat-empty">Le chat s'ouvrira dès qu'un chauffeur acceptera la course.</p></div>
                     <form id="clientChatForm" class="chat-form">
                         <input type="text" id="clientChatInput" maxlength="1500" placeholder="Votre message au chauffeur…" autocomplete="off" disabled required>
@@ -388,16 +931,18 @@
         </section>
     </main>
     <nav class="tab-bar" aria-label="Navigation principale">
-        <a href="#/accueil" class="tab-btn active" id="btn-accueil" onclick="handleNavClick(event,'/accueil')"><span class="icon" aria-hidden="true">🏠</span>Acceuil</a>
-        <a href="#/chauffeurs" class="tab-btn" id="btn-chauffeurs" onclick="handleNavClick(event,'/chauffeurs')"><span class="icon" aria-hidden="true">🛵</span>Chaffeurs</a>
+        <a href="#/accueil" class="tab-btn active" id="btn-accueil" onclick="handleNavClick(event,'/accueil')"><span class="icon" aria-hidden="true">🏠</span>Accueil</a>
+        <a href="#/chauffeurs" class="tab-btn" id="btn-chauffeurs" onclick="handleNavClick(event,'/chauffeurs')"><span class="icon" aria-hidden="true">🛵</span>Chauffeurs</a>
         <a href="#/demandes" class="tab-btn" id="btn-demandes" onclick="handleNavClick(event,'/demandes')"><span class="icon" aria-hidden="true">📨</span>Demandes</a>
         <a href="#/login" class="tab-btn" id="btn-login" onclick="handleNavClick(event,'/login')"><span class="icon" aria-hidden="true">👤</span>Profile</a>
-        <a href="#/inscription" class="tab-btn" id="btn-action" onclick="handleAuthActionLink(event)"><span class="icon" aria-hidden="true">📝</span>Signuo/login</a>
+        <a href="#/inscription" class="tab-btn" id="btn-action" onclick="handleAuthActionLink(event)"><span class="icon" aria-hidden="true">📝</span>Inscription</a>
     </nav>
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLV3lfxOk987RRVUpPuc3ZymtIJEvj6UbGMrJfVtc6D3x-tAwhofUsXFSmWhp5OFY6zA/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVWcukwxIRSRGJfDvqoMm1jPiYCBCjDKZ-QFZKzIPzZ9mo8zu88jZBvYd-F_i1K5ycow/exec";
         let base64PhotoEnAttente = "";
         let requeteChauffeurs = 0;
+        let chargementChauffeursEnCours = false;
+        let timerPollingChauffeurs = null;
 
         async function lireReponseJson(response) {
             if (!response.ok) throw new Error('Réponse serveur ' + response.status);
@@ -445,6 +990,17 @@
         }
         window.addEventListener('popstate',() => navigateTo(routeFromPath(window.location.pathname),false));
         window.addEventListener('hashchange',() => navigateTo(routeFromPath(window.location.pathname),false));
+        window.addEventListener('online', function() {
+            if (document.getElementById('tab-chauffeurs').classList.contains('active')) chargerChauffeurs();
+            if (document.getElementById('tab-demandes').classList.contains('active')) chargerDemandes({ silencieux: true });
+            if (clientDemandeCourante) verifierStatutDemandeClient();
+        });
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState !== 'visible') return;
+            if (document.getElementById('tab-chauffeurs').classList.contains('active')) chargerChauffeurs();
+            if (obtenirChauffeurConnecte()) chargerDemandes({ silencieux: true });
+            if (clientDemandeCourante) verifierStatutDemandeClient();
+        });
         function updateAuthButtonUI(connected) {
             const button = document.getElementById('btn-action');
             if (!button) return;
@@ -472,7 +1028,10 @@
                     destination: result.request.destination,
                     statut: result.request.statut || 'En attente'
                 };
-                try { localStorage.setItem('btaxi_client_request', JSON.stringify(clientDemandeCourante)); } catch (storageError) { console.warn('Demande conservée uniquement dans cette page.'); }
+                try {
+                    localStorage.setItem('btaxi_client_request', JSON.stringify(clientDemandeCourante));
+                    localStorage.setItem('btaxi_last_message_client_' + clientDemandeCourante.id, '__BTAXI_EMPTY__');
+                } catch (storageError) { console.warn('Demande conservée uniquement dans cette page.'); }
                 afficherDemandeClient();
                 updateMessage(message, '#047857', 'Demande envoyée aux chauffeurs disponibles. Gardez cette page ouverte pour recevoir la réponse.');
                 document.getElementById('clientRequestPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -485,23 +1044,38 @@
             }
         }
 
-        async function chargerChauffeurs() {
+        async function chargerChauffeurs(options) {
+            options = options || {};
+            if (chargementChauffeursEnCours) return;
+            chargementChauffeursEnCours = true;
             const container = document.getElementById('listeChauffeurs');
             const requestId = ++requeteChauffeurs;
-            container.textContent = 'Recherche des chauffeurs en direct...';
+            if (!options.silencieux && !container.children.length) container.textContent = 'Recherche des chauffeurs en direct...';
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL,{headers:{Accept:'application/json'}});
+                const response = await fetch(GOOGLE_SCRIPT_URL, { headers: { Accept: 'application/json' }, cache: 'no-store' });
                 const data = await lireReponseJson(response);
                 if (requestId !== requeteChauffeurs) return;
-                if (!Array.isArray(data) || data.length === 0) { container.textContent='Aucun chauffeur enregistré pour le moment.'; return; }
-                const fragment=document.createDocumentFragment();
-                data.forEach(driver=>fragment.appendChild(creerCarteChauffeur(driver||{})));
+                if (!Array.isArray(data) || data.length === 0) { container.textContent = 'Aucun chauffeur enregistré pour le moment.'; return; }
+                const fragment = document.createDocumentFragment();
+                data.forEach(driver => fragment.appendChild(creerCarteChauffeur(driver || {})));
                 container.replaceChildren(fragment);
             } catch (error) {
                 if (requestId !== requeteChauffeurs) return;
-                container.textContent='Impossible de charger les chauffeurs. Vérifiez votre connexion puis réessayez.';
-                console.error('Chargement des chauffeurs impossible:',error);
+                if (!options.silencieux) container.textContent = 'Impossible de charger les chauffeurs. Vérifiez votre connexion puis réessayez.';
+                console.error('Chargement des chauffeurs impossible:', error);
+            } finally {
+                chargementChauffeursEnCours = false;
             }
+        }
+
+        function demarrerPollingChauffeurs() {
+            if (timerPollingChauffeurs) clearInterval(timerPollingChauffeurs);
+            timerPollingChauffeurs = setInterval(function() {
+                const panel = document.getElementById('tab-chauffeurs');
+                if (document.visibilityState !== 'hidden' && panel && panel.classList.contains('active')) {
+                    chargerChauffeurs({ silencieux: true });
+                }
+            }, 8000);
         }
         function creerCarteChauffeur(driver) {
             const available=String(driver.statut||'').trim().toLocaleLowerCase('fr')==='disponible';
@@ -578,8 +1152,10 @@
         window.addEventListener('load',()=>{
             let driver=null;try{driver=JSON.parse(localStorage.getItem('moto_user')||'null');}catch(error){try{localStorage.removeItem('moto_user');}catch(storageError){console.warn('Stockage local indisponible.');}}
             updateAuthButtonUI(!!driver);if(driver&&typeof driver==='object'){afficherProfil(driver);demarrerPollingDemandes();}navigateTo(routeFromPath(window.location.pathname),false);
+            demarrerPollingChauffeurs();
             restaurerDemandeClient();
-            if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('service-worker.js').catch(error=>console.warn('Le service worker n’a pas pu être enregistré :',error));
+            if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('service-worker.js').catch(error=>console.warn('Le service worker principal n’a pas pu être enregistré :',error));
+            preparerNotificationsServiceWorker();
         });
 
         // -----------------------------------------------------------------
@@ -592,6 +1168,11 @@
         let idsDemandesConnues = null;
         let demandeChatChauffeurActive = '';
         let contexteAudioBtaxi = null;
+        let chargementDemandesEnCours = false;
+        const messagesEnCoursDeChargement = new Set();
+        const cacheMessagesParConversation = Object.create(null);
+        const signaturesMessagesAffichees = Object.create(null);
+        let btaxiNotificationRegistrationPromise = null;
 
         async function envoyerAuServeur(payload) {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -634,20 +1215,32 @@
             const panel = document.getElementById('clientRequestPanel');
             panel.hidden = false;
             document.getElementById('clientRequestSummary').textContent = 'Départ : ' + clientDemandeCourante.depart + ' — Destination : ' + clientDemandeCourante.destination;
-            const accepted = String(clientDemandeCourante.statut || '').toLocaleLowerCase('fr') === 'acceptée';
-            document.getElementById('clientRequestStatus').textContent = accepted ? '✅ Votre course est acceptée' : '⏳ Demande envoyée — en attente';
+            const status = String(clientDemandeCourante.statut || '').toLocaleLowerCase('fr');
+            const accepted = status === 'acceptée';
+            const deleted = status === 'supprimée';
+            document.getElementById('clientRequestStatus').textContent = accepted
+                ? '✅ Votre course est acceptée'
+                : deleted ? '⚠️ Demande annulée' : '⏳ Demande envoyée — en attente';
             document.getElementById('clientRequestHint').textContent = accepted
                 ? 'Le chauffeur ' + (clientDemandeCourante.acceptedName || '') + ' a accepté. Vous pouvez discuter ci-dessous.'
+                : deleted ? 'Cette demande a été retirée par un chauffeur. Vous pouvez créer une nouvelle demande.'
                 : 'Nous recherchons un chauffeur disponible. Le chat sera activé après acceptation.';
             document.getElementById('clientChatInput').disabled = !accepted;
             document.getElementById('clientChatSend').disabled = !accepted;
+            if (deleted) {
+                document.getElementById('clientChatLog').replaceChildren();
+                const info = document.createElement('p');
+                info.className = 'chat-empty';
+                info.textContent = 'Cette demande a été annulée. Appuyez sur « Nouvelle demande » pour recommencer.';
+                document.getElementById('clientChatLog').appendChild(info);
+            }
         }
 
         function demarrerSuiviDemandeClient() {
             if (timerSuiviClient) clearInterval(timerSuiviClient);
             if (!clientDemandeCourante) return;
             verifierStatutDemandeClient();
-            timerSuiviClient = setInterval(verifierStatutDemandeClient, 5000);
+            timerSuiviClient = setInterval(verifierStatutDemandeClient, 3200);
         }
 
         async function verifierStatutDemandeClient() {
@@ -661,6 +1254,11 @@
                 afficherDemandeClient();
                 if (before !== 'Acceptée' && clientDemandeCourante.statut === 'Acceptée') {
                     updateMessage(document.getElementById('clientChatMessage'), '#047857', 'Un chauffeur a accepté votre course. Vous pouvez lui écrire.');
+                    notifierUtilisateur('client', 'BTAXI — Course acceptée', 'Le chauffeur ' + (clientDemandeCourante.acceptedName || '') + ' a accepté votre course.', 'btaxi-course-acceptee-' + clientDemandeCourante.id);
+                }
+                if (before !== 'Supprimée' && clientDemandeCourante.statut === 'Supprimée') {
+                    updateMessage(document.getElementById('clientChatMessage'), '#b91c1c', 'Le chauffeur a annulé cette demande. Vous pouvez en créer une nouvelle.');
+                    notifierUtilisateur('client', 'BTAXI — Demande annulée', 'Votre demande a été retirée. Vous pouvez envoyer une nouvelle demande.', 'btaxi-course-supprimee-' + clientDemandeCourante.id);
                 }
                 if (clientDemandeCourante.statut === 'Acceptée') await chargerMessagesClient();
             } catch (error) {
@@ -670,10 +1268,23 @@
 
         async function chargerMessagesClient() {
             if (!clientDemandeCourante || clientDemandeCourante.statut !== 'Acceptée') return;
+            const requestId = clientDemandeCourante.id;
+            const lockKey = 'client:' + requestId;
+            if (messagesEnCoursDeChargement.has(lockKey)) return;
+            messagesEnCoursDeChargement.add(lockKey);
             try {
-                const result = await lireDepuisServeur({ action: 'getMessages', requestId: clientDemandeCourante.id, clientToken: clientDemandeCourante.clientToken });
-                if (result.success && Array.isArray(result.messages)) afficherMessagesDans('clientChatLog', result.messages, 'client');
+                const cacheKey = 'client:' + requestId;
+                const cached = cacheMessagesParConversation[cacheKey];
+                const params = { action: 'getMessages', requestId: requestId, clientToken: clientDemandeCourante.clientToken };
+                if (cached && cached.length) params.afterId = cached[cached.length - 1].id;
+                const result = await lireDepuisServeur(params);
+                if (result.success && Array.isArray(result.messages)) {
+                    const allMessages = fusionnerMessages_(cacheKey, result);
+                    surveillerNouveauxMessages(allMessages, 'client', requestId);
+                    afficherMessagesDans('clientChatLog', allMessages, 'client', requestId);
+                }
             } catch (error) { console.warn('Chargement du chat client impossible :', error); }
+            finally { messagesEnCoursDeChargement.delete(lockKey); }
         }
 
         document.getElementById('clientChatForm').addEventListener('submit', async function(event) {
@@ -705,6 +1316,31 @@
             document.getElementById('clientChatLog').replaceChildren();
         });
 
+        document.getElementById('btnEnableClientAlerts').addEventListener('click', async function() {
+            const status = document.getElementById('clientAlertStatus');
+            try {
+                if (!window.isSecureContext && location.hostname !== 'localhost') {
+                    updateMessage(status, '#b91c1c', 'Les notifications exigent HTTPS. Ouvrez BTAXI avec une adresse https://.');
+                    return;
+                }
+                if ('Notification' in window && Notification.permission === 'default') await Notification.requestPermission();
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    if (!contexteAudioBtaxi) contexteAudioBtaxi = new AudioContextClass();
+                    if (contexteAudioBtaxi.state === 'suspended') await contexteAudioBtaxi.resume();
+                    jouerAlerteSonore(true);
+                }
+                localStorage.setItem('btaxi_client_alertes_active', '1');
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    updateMessage(status, '#047857', '✅ Alertes client activées. Gardez BTAXI ouvert pour être averti des nouveaux messages et réponses.');
+                } else {
+                    updateMessage(status, '#92400e', 'Sonnerie activée. Autorisez les notifications dans le navigateur pour recevoir les alertes visuelles.');
+                }
+            } catch (error) {
+                updateMessage(status, '#b91c1c', 'Impossible d’activer les alertes : ' + (error.message || 'permission refusée.'));
+            }
+        });
+
         function demarrerPollingDemandes() {
             const dejaActif = !!timerPollingDemandes;
             if (timerPollingDemandes) clearInterval(timerPollingDemandes);
@@ -714,7 +1350,7 @@
                 updateMessage(status, '#047857', 'Les alertes sont activées sur cet appareil. Gardez BTAXI ouvert pour recevoir les alertes en direct.');
             }
             chargerDemandes({ silencieux: true });
-            timerPollingDemandes = setInterval(function() { chargerDemandes({ silencieux: true }); }, 10000);
+            timerPollingDemandes = setInterval(function() { chargerDemandes({ silencieux: true }); }, 4000);
         }
 
         function arreterPollingDemandes() {
@@ -744,6 +1380,8 @@
                 updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', 'Reconnectez-vous pour activer les demandes et le chat.');
                 return;
             }
+            if (chargementDemandesEnCours) return;
+            chargementDemandesEnCours = true;
             if (!options.silencieux && !container.children.length) container.textContent = 'Chargement des demandes…';
             try {
                 const result = await lireDepuisServeur({ action: 'listRequests', username: driver.username, sessionToken: driver.sessionToken });
@@ -769,12 +1407,19 @@
                     idsDemandesConnues = current;
                 }
                 afficherListeDemandes(requests, driver);
-                if (demandeChatChauffeurActive) await chargerMessagesChauffeur(demandeChatChauffeurActive);
+                // Vérifie aussi les messages reçus des courses acceptées, même si leur chat n'est pas ouvert.
+                const acceptedRequests = requests.filter(function(r) {
+                    return String(r.statut).toLocaleLowerCase('fr') === 'acceptée' &&
+                        String(r.acceptedBy || '').toLocaleLowerCase('fr') === String(driver.username || '').toLocaleLowerCase('fr');
+                });
+                await Promise.all(acceptedRequests.map(function(r) { return chargerMessagesChauffeur(r.id, { silencieux: true }); }));
             } catch (error) {
                 if (!options.silencieux) {
                     container.textContent = 'Impossible de charger les demandes. Vérifiez votre connexion.';
                 }
                 console.error('Chargement des demandes impossible :', error);
+            } finally {
+                chargementDemandesEnCours = false;
             }
         }
 
@@ -818,8 +1463,48 @@
                     acceptButton.addEventListener('click', function() { accepterDemande(request, acceptButton); });
                     card.appendChild(acceptButton);
                 }
+                const acceptedByMe = request.statut === 'Acceptée' && String(request.acceptedBy || '').toLocaleLowerCase('fr') === String(driver.username || '').toLocaleLowerCase('fr');
+                if (request.statut === 'En attente' || acceptedByMe) {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.className = 'btn-delete-request';
+                    deleteButton.textContent = '🗑 Supprimer cette demande';
+                    deleteButton.addEventListener('click', function() { supprimerDemandeChauffeur(request, deleteButton); });
+                    card.appendChild(deleteButton);
+                }
                 container.appendChild(card);
             });
+        }
+
+        async function supprimerDemandeChauffeur(request, button) {
+            const driver = obtenirChauffeurConnecte();
+            if (!driver) {
+                updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', 'Connectez-vous avant de supprimer une demande.');
+                return;
+            }
+            const confirmed = window.confirm('Supprimer cette demande de la liste BTAXI ? Le client verra que la demande a été annulée.');
+            if (!confirmed) return;
+            button.disabled = true;
+            button.textContent = 'Suppression…';
+            try {
+                const result = await envoyerAuServeur({
+                    action: 'deleteRequest', requestId: request.id,
+                    username: driver.username, sessionToken: driver.sessionToken
+                });
+                if (!result.success) throw new Error(result.message || 'Impossible de supprimer la demande.');
+                if (demandeChatChauffeurActive === request.id) {
+                    document.getElementById('driverChatPanel').hidden = true;
+                    demandeChatChauffeurActive = '';
+                    if (timerChatChauffeur) clearInterval(timerChatChauffeur);
+                    timerChatChauffeur = null;
+                }
+                updateMessage(document.getElementById('driverAlertStatus'), '#047857', result.message || 'Demande supprimée.');
+                await chargerDemandes({ silencieux: true });
+            } catch (error) {
+                updateMessage(document.getElementById('driverAlertStatus'), '#b91c1c', error.message || 'Erreur lors de la suppression.');
+                button.disabled = false;
+                button.textContent = '🗑 Supprimer cette demande';
+            }
         }
 
         async function accepterDemande(request, button) {
@@ -830,6 +1515,7 @@
             try {
                 const result = await envoyerAuServeur({ action: 'acceptRequest', requestId: request.id, username: driver.username, sessionToken: driver.sessionToken });
                 if (!result.success || !result.request) throw new Error(result.message || 'Cette course ne peut pas être acceptée.');
+                try { localStorage.setItem('btaxi_last_message_driver_' + request.id, '__BTAXI_EMPTY__'); } catch (error) {}
                 updateMessage(document.getElementById('driverAlertStatus'), '#047857', 'Course acceptée. Le chat avec le client est ouvert.');
                 await chargerDemandes({ silencieux: true });
                 ouvrirChatChauffeur(result.request);
@@ -849,18 +1535,34 @@
             navigateTo('/demandes');
             chargerMessagesChauffeur(request.id);
             if (timerChatChauffeur) clearInterval(timerChatChauffeur);
-            timerChatChauffeur = setInterval(function() { if (demandeChatChauffeurActive) chargerMessagesChauffeur(demandeChatChauffeurActive); }, 5000);
+            timerChatChauffeur = setInterval(function() { if (demandeChatChauffeurActive) chargerMessagesChauffeur(demandeChatChauffeurActive); }, 1800);
             setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
         }
 
-        async function chargerMessagesChauffeur(requestId) {
+        async function chargerMessagesChauffeur(requestId, options) {
+            options = options || {};
             const driver = obtenirChauffeurConnecte();
             if (!driver || !requestId) return;
+            const lockKey = 'driver:' + requestId;
+            if (messagesEnCoursDeChargement.has(lockKey)) return;
+            messagesEnCoursDeChargement.add(lockKey);
             try {
-                const result = await lireDepuisServeur({ action: 'getMessages', requestId: requestId, username: driver.username, sessionToken: driver.sessionToken });
-                if (result.success && Array.isArray(result.messages)) afficherMessagesDans('driverChatLog', result.messages, 'driver');
-                else if (!result.success) updateMessage(document.getElementById('driverChatMessage'), '#b91c1c', result.message || 'Chat indisponible.');
-            } catch (error) { console.warn('Chargement du chat chauffeur impossible :', error); }
+                const cacheKey = 'driver:' + requestId;
+                const cached = cacheMessagesParConversation[cacheKey];
+                const params = { action: 'getMessages', requestId: requestId, username: driver.username, sessionToken: driver.sessionToken };
+                if (cached && cached.length) params.afterId = cached[cached.length - 1].id;
+                const result = await lireDepuisServeur(params);
+                if (result.success && Array.isArray(result.messages)) {
+                    const allMessages = fusionnerMessages_(cacheKey, result);
+                    surveillerNouveauxMessages(allMessages, 'driver', requestId);
+                    if (demandeChatChauffeurActive === requestId && !document.getElementById('driverChatPanel').hidden) {
+                        afficherMessagesDans('driverChatLog', allMessages, 'driver', requestId);
+                    }
+                } else if (!result.success && !options.silencieux && demandeChatChauffeurActive === requestId) {
+                    updateMessage(document.getElementById('driverChatMessage'), '#b91c1c', result.message || 'Chat indisponible.');
+                }
+            } catch (error) { if (!options.silencieux) console.warn('Chargement du chat chauffeur impossible :', error); }
+            finally { messagesEnCoursDeChargement.delete(lockKey); }
         }
 
         document.getElementById('driverChatForm').addEventListener('submit', async function(event) {
@@ -889,8 +1591,118 @@
             timerChatChauffeur = null;
         });
 
-        function afficherMessagesDans(containerId, messages, role) {
+        function fusionnerMessages_(cacheKey, result) {
+            const incoming = Array.isArray(result.messages) ? result.messages : [];
+            if (result.incremental && Array.isArray(cacheMessagesParConversation[cacheKey])) {
+                const existing = cacheMessagesParConversation[cacheKey];
+                const knownIds = new Set(existing.map(function(item) { return String(item.id || ''); }));
+                incoming.forEach(function(item) {
+                    const id = String(item.id || '');
+                    if (!knownIds.has(id)) { existing.push(item); knownIds.add(id); }
+                });
+                cacheMessagesParConversation[cacheKey] = existing;
+            } else {
+                cacheMessagesParConversation[cacheKey] = incoming.slice();
+            }
+            return cacheMessagesParConversation[cacheKey];
+        }
+
+        function surveillerNouveauxMessages(messages, role, requestId) {
+            if (!Array.isArray(messages)) return;
+            const key = 'btaxi_last_message_' + role + '_' + requestId;
+            let stored = null;
+            try { stored = localStorage.getItem(key); } catch (error) {}
+            const latest = messages.length ? String(messages[messages.length - 1].id || '') : '';
+
+            // Au premier chargement, on mémorise le point de départ pour ne pas notifier tout l'ancien historique.
+            if (stored === null) {
+                try { localStorage.setItem(key, latest || '__BTAXI_EMPTY__'); } catch (error) {}
+                return;
+            }
+
+            let incoming = [];
+            if (stored === '__BTAXI_EMPTY__') {
+                incoming = messages.filter(function(item) { return item.senderType !== role; });
+            } else if (stored) {
+                const index = messages.findIndex(function(item) { return String(item.id || '') === stored; });
+                if (index >= 0) incoming = messages.slice(index + 1).filter(function(item) { return item.senderType !== role; });
+            }
+
+            if (latest) {
+                try { localStorage.setItem(key, latest); } catch (error) {}
+            }
+            if (!incoming.length) return;
+
+            const newest = incoming[incoming.length - 1];
+            const sender = newest.senderName || (role === 'client' ? 'Chauffeur' : 'Client');
+            const title = role === 'client' ? 'BTAXI — Message du chauffeur' : 'BTAXI — Message du client';
+            const body = (incoming.length > 1 ? incoming.length + ' nouveaux messages. ' : '') + sender + ' : ' + String(newest.message || '').slice(0, 180);
+            notifierUtilisateur(role, title, body, 'btaxi-message-' + role + '-' + requestId + '-' + (newest.id || Date.now()));
+            const statusId = role === 'client' ? 'clientChatMessage' : 'driverChatMessage';
+            const statusElement = document.getElementById(statusId);
+            if (statusElement) updateMessage(statusElement, '#047857', '💬 Nouveau message reçu de ' + sender + '.');
+        }
+
+        function preparerNotificationsServiceWorker() {
+            if (!('serviceWorker' in navigator) || !window.isSecureContext) {
+                btaxiNotificationRegistrationPromise = Promise.resolve(null);
+                return;
+            }
+            // Portée séparée pour les alertes : ne remplace pas le service worker principal de la PWA.
+            btaxiNotificationRegistrationPromise = navigator.serviceWorker.register('btaxi-notify/sw.js', { scope: 'btaxi-notify/' })
+                .then(function(registration) { return registration; })
+                .catch(function(error) { console.warn('Le service worker de notification n’a pas pu être enregistré :', error); return null; });
+        }
+
+        function notifierUtilisateur(role, title, body, tag) {
+            let active = false;
+            try {
+                const key = role === 'client' ? 'btaxi_client_alertes_active' : 'btaxi_alertes_active';
+                active = localStorage.getItem(key) === '1';
+            } catch (error) {}
+            if (!active) return;
+            jouerAlerteSonore(false);
+            if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+            const options = {
+                body: body,
+                tag: tag || undefined,
+                renotify: true,
+                requireInteraction: false,
+                data: { url: location.origin + location.pathname + (role === 'client' ? '#/accueil' : '#/demandes') }
+            };
+            const fallbackNotification = function() {
+                try {
+                    // Secours pour navigateurs de bureau qui prennent en charge le constructeur Notification.
+                    const notification = new Notification(title, options);
+                    notification.onclick = function() {
+                        window.focus();
+                        navigateTo(role === 'client' ? '/accueil' : '/demandes');
+                        notification.close();
+                    };
+                } catch (error) { console.warn('Notification BTAXI impossible :', error); }
+            };
+
+            const registrationPromise = btaxiNotificationRegistrationPromise || Promise.resolve(null);
+            registrationPromise.then(function(registration) {
+                if (registration && typeof registration.showNotification === 'function') {
+                    return registration.showNotification(title, options).catch(function(error) {
+                        console.warn('Notification du service worker impossible :', error);
+                        fallbackNotification();
+                    });
+                }
+                fallbackNotification();
+                return null;
+            }).catch(function() { fallbackNotification(); });
+        }
+
+        function afficherMessagesDans(containerId, messages, role, conversationId) {
             const container = document.getElementById(containerId);
+            if (!container) return;
+            const signatureKey = role + ':' + (conversationId || containerId);
+            const signature = messages.map(function(item) { return String(item.id || '') + ':' + String(item.message || ''); }).join('|');
+            if (signaturesMessagesAffichees[signatureKey] === signature) return;
+            signaturesMessagesAffichees[signatureKey] = signature;
             const wasNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 60;
             container.replaceChildren();
             if (!messages.length) {
@@ -956,21 +1768,7 @@
             const driver = obtenirChauffeurConnecte();
             if (!driver || String(driver.statut || '').toLocaleLowerCase('fr') !== 'disponible') return;
             if (localStorage.getItem('btaxi_alertes_active') !== '1') return;
-            jouerAlerteSonore(false);
-            if ('Notification' in window && Notification.permission === 'granted') {
-                try {
-                    const notification = new Notification('BTAXI — Nouvelle demande de course', {
-                        body: 'Départ : ' + request.depart + '\nDestination : ' + request.destination,
-                        tag: 'btaxi-demande-' + request.id,
-                        requireInteraction: true
-                    });
-                    notification.onclick = function() {
-                        window.focus();
-                        navigateTo('/demandes');
-                        notification.close();
-                    };
-                } catch (error) { console.warn('Notification impossible :', error); }
-            }
+            notifierUtilisateur('driver', 'BTAXI — Nouvelle demande de course', 'Départ : ' + request.depart + ' — Destination : ' + request.destination, 'btaxi-demande-' + request.id);
             updateMessage(document.getElementById('driverAlertStatus'), '#047857', '🔔 Nouvelle demande reçue. Consultez la liste et acceptez la course si elle vous convient.');
         }
 
